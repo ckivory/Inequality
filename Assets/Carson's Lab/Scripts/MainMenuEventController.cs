@@ -11,9 +11,9 @@ public class MainMenuEventController : MonoBehaviour
         SceneManager.LoadScene("Portfolio");
     }
 
-    public void OptionsButtonPushed()
+    public void SetupButtonPushed()
     {
-        SceneManager.LoadScene("Options Menu");
+        SceneManager.LoadScene("Game Setup");
     }
 
     public void ExitButtonPushed()
