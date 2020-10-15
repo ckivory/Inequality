@@ -15,19 +15,21 @@ public class TabController : MonoBehaviour
 
     public void ConstructTab(float window_width, int num_tabs, int tab_index)
     {
+        float neckHeight = neck.sprite.border[3] / neck.pixelsPerUnitMultiplier;
         neck.transform.localPosition = Vector2.zero;
-        neck.GetComponent<RectTransform>().sizeDelta = new Vector2(window_width, neck.sprite.border[3]);
+        neck.GetComponent<RectTransform>().sizeDelta = new Vector2(window_width, neckHeight);
 
         float tab_width = (window_width * 1f / num_tabs);
         // Left side of window, plus at least half a tab width to center it, offset by the size of the other tabs
-        Vector2 head_position = new Vector2((-1 * window_width / 2) + tab_width * (0.5f + tab_index), tab_height / 2 - neck.sprite.border[3] / 2);
+        Vector2 head_position = new Vector2((-1 * window_width / 2) + tab_width * (0.5f + tab_index), tab_height / 2 - neckHeight / 2);
         headBorder.transform.localPosition = head_position;
 
         Vector2 head_size = new Vector2(tab_width, tab_height);
         headBorder.GetComponent<RectTransform>().sizeDelta = head_size;
 
-        headFace.transform.localPosition = new Vector2(head_position.x, head_position.y - border_width / 2);
-        headFace.GetComponent<RectTransform>().sizeDelta = new Vector2(head_size.x - border_width * 2, head_size.y - border_width);
+        float adjustedBorder = border_width / headBorder.pixelsPerUnitMultiplier;
+        headFace.transform.localPosition = new Vector2(head_position.x, head_position.y - adjustedBorder / 2);
+        headFace.GetComponent<RectTransform>().sizeDelta = new Vector2(head_size.x - adjustedBorder * 2, head_size.y - adjustedBorder);
     }
 
     // Start is called before the first frame update
