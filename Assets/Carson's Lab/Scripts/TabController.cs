@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class TabController : MonoBehaviour
 {
+    public Canvas canvas;
+
     public Image tabBorder;
     public Image tabFace;
 
@@ -29,11 +31,15 @@ public class TabController : MonoBehaviour
             window.GetComponent<RectTransform>().rect.height / 2 + tabSize.y / 2 - neckHeight / 2
             );
 
-        tabBorder.transform.localPosition = new Vector3(tabPosition.x, tabPosition.y, -1f);     // Hopefully behind the window
+        tabBorder.transform.localPosition = new Vector2(tabPosition.x, tabPosition.y);
+        tabBorder.transform.SetParent(canvas.transform);
+        tabBorder.transform.SetSiblingIndex(tabBorder.transform.GetSiblingIndex() - 2);
 
         float adjustedBorder = borderWidth / tabBorder.pixelsPerUnitMultiplier;
-        tabFace.transform.localPosition = new Vector3(tabPosition.x, tabPosition.y - adjustedBorder / 2, 1f);   // Hopefully in front of both the border and the window
         tabFace.GetComponent<RectTransform>().sizeDelta = new Vector2(tabSize.x - adjustedBorder * 2, tabSize.y - adjustedBorder);
+        tabFace.transform.localPosition = new Vector3(tabPosition.x, tabPosition.y - adjustedBorder / 2);
+        tabFace.transform.SetParent(canvas.transform);
+        tabFace.transform.SetSiblingIndex(tabBorder.transform.GetSiblingIndex() + 2);
     }
 
     // Start is called before the first frame update

@@ -572,6 +572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca918d61886c9942a18a80cebb950eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 1056499553}
   tabBorder: {fileID: 296154477}
   tabFace: {fileID: 466944981}
   borderWidth: 2
