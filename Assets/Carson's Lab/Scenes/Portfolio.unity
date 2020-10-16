@@ -189,7 +189,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 2
 --- !u!222 &296154478
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -264,7 +264,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 2
 --- !u!222 &466944982
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -364,7 +364,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 3195479499489345454}
-  - {fileID: 2007831333}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -546,14 +545,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2007831332}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 296154476}
   - {fileID: 466944980}
-  m_Father: {fileID: 1056499554}
-  m_RootOrder: 1
+  m_Father: {fileID: 3195479499489345454}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -572,12 +571,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca918d61886c9942a18a80cebb950eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 1056499553}
+  window: {fileID: 3195479499489345427}
   tabBorder: {fileID: 296154477}
   tabFace: {fileID: 466944981}
   borderWidth: 2
-  tabHeight: 50
-  window: {fileID: 3195479499489345427}
+  tabHeight: 40
 --- !u!222 &3195479499489345424
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -615,7 +613,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 2
 --- !u!114 &3195479499489345427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -628,6 +626,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a9d1fd7ac86f7e4bb1f1a2f4fee0edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 1056499553}
   Title: {fileID: 3195479500842959870}
   rows:
   - {fileID: 4901627730352775670}
@@ -644,6 +643,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 2007831333}
   - {fileID: 3195479500842959871}
   - {fileID: 4901627730352775671}
   m_Father: {fileID: 1056499554}
@@ -745,7 +745,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3195479499489345454}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -960,6 +960,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a9d1fd7ac86f7e4bb1f1a2f4fee0edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
   Title: {fileID: 4901627729051690600}
   rows:
   - {fileID: 4901627729893421966}
@@ -998,7 +999,7 @@ RectTransform:
   - {fileID: 4901627729051690607}
   - {fileID: 4901627729893421967}
   m_Father: {fileID: 3195479499489345454}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

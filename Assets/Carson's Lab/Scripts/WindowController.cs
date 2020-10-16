@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class WindowController : MonoBehaviour
 {
+    // Reference to the parent, to be used for sorting elements.
+    public Canvas canvas;
+
     // Optional
     public Text Title;
 

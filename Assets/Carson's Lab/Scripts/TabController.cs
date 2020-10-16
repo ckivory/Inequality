@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class TabController : MonoBehaviour
 {
-    public Canvas canvas;
+    // Reference to the parent;
+    public WindowController window;
 
     public Image tabBorder;
     public Image tabFace;
@@ -14,7 +15,7 @@ public class TabController : MonoBehaviour
     public float borderWidth;
     public float tabHeight;
 
-    public WindowController window;
+    
 
     public void ConstructTab(int numTabs, int tabIndex)
     {
@@ -32,14 +33,17 @@ public class TabController : MonoBehaviour
             );
 
         tabBorder.transform.localPosition = new Vector2(tabPosition.x, tabPosition.y);
-        tabBorder.transform.SetParent(canvas.transform);
-        tabBorder.transform.SetSiblingIndex(tabBorder.transform.GetSiblingIndex() - 2);
+
+        // Deploys tab border to back of Canvas
+        tabBorder.transform.SetParent(window.canvas.transform);
+        tabBorder.transform.SetSiblingIndex(0);
 
         float adjustedBorder = borderWidth / tabBorder.pixelsPerUnitMultiplier;
         tabFace.GetComponent<RectTransform>().sizeDelta = new Vector2(tabSize.x - adjustedBorder * 2, tabSize.y - adjustedBorder);
         tabFace.transform.localPosition = new Vector3(tabPosition.x, tabPosition.y - adjustedBorder / 2);
-        tabFace.transform.SetParent(canvas.transform);
-        tabFace.transform.SetSiblingIndex(tabBorder.transform.GetSiblingIndex() + 2);
+        
+        // Deploys tab face to front of Canvas
+        tabFace.transform.SetParent(window.canvas.transform);
     }
 
     // Start is called before the first frame update
