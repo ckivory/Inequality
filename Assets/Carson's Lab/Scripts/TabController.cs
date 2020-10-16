@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class TabController : MonoBehaviour
 {
-    // Reference to the parent;
+    // Reference to the parent. Should be set from the parent;
+    [HideInInspector]
     public WindowController window;
 
     public Image tabBorder;
@@ -15,13 +16,13 @@ public class TabController : MonoBehaviour
     public float borderWidth;
     public float tabHeight;
 
-    
-
-    public void ConstructTab(int numTabs, int tabIndex)
+    public void PositionTab(int[] tabData)
     {
+        int numTabs = tabData[0];
+        int tabIndex = tabData[1];
         float windowWidth = window.GetComponent<RectTransform>().rect.width;
         float tabWidth = (windowWidth * 1f / numTabs);
-        
+
         Vector2 tabSize = new Vector2(tabWidth, tabHeight);
         tabBorder.GetComponent<RectTransform>().sizeDelta = tabSize;
 
@@ -34,28 +35,35 @@ public class TabController : MonoBehaviour
 
         tabBorder.transform.localPosition = new Vector2(tabPosition.x, tabPosition.y);
 
-        // Deploys tab border to back of Canvas
-        tabBorder.transform.SetParent(window.canvas.transform);
-        tabBorder.transform.SetSiblingIndex(0);
-
         float adjustedBorder = borderWidth / tabBorder.pixelsPerUnitMultiplier;
         tabFace.GetComponent<RectTransform>().sizeDelta = new Vector2(tabSize.x - adjustedBorder * 2, tabSize.y - adjustedBorder);
         tabFace.transform.localPosition = new Vector3(tabPosition.x, tabPosition.y - adjustedBorder / 2);
-        
-        // Deploys tab face to front of Canvas
-        tabFace.transform.SetParent(window.canvas.transform);
+    }
+
+    public void DeployTab()
+    {
+        // Moves tab border to back of Canvas
+        tabBorder.transform.SetParent(window.parent.transform);
+        tabBorder.transform.SetSiblingIndex(0);
+
+        // Moves tab face to front of Canvas
+        tabFace.transform.SetParent(window.parent.transform);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        // Tells the tab to act like it is the middle of three tabs.
-        ConstructTab(3, 1);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        /*
+        if(tab needs to be moved)
+        {
+            PositionTab(new int[] {3, 1});
+        }
+        */
     }
 }

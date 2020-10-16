@@ -6,7 +6,10 @@ using UnityEngine.UI;
 public class WindowController : MonoBehaviour
 {
     // Reference to the parent, to be used for sorting elements.
-    public Canvas canvas;
+    public GameObject parent;
+
+    // Optional
+    public TabController tab;
 
     // Optional
     public Text Title;
@@ -41,7 +44,7 @@ public class WindowController : MonoBehaviour
         return new Vector2(contentWidth, contentHeight);
     }
 
-    void PositionElements()
+    public void PositionElements()
     {
         Vector2 dimensions = ContentDimensions();
 
@@ -65,6 +68,13 @@ public class WindowController : MonoBehaviour
         transform.localPosition = new Vector2(0f, 0f);
         GetComponent<RectTransform>().sizeDelta = new Vector2(windowWidth, windowHeight);
 
+        // Move tab to correct location
+        if (tab != null)
+        {
+            tab.SendMessage("PositionTab", new int[] { 3, 1 });
+        }
+
+        // Place Title
         float nextElementY = windowHeight / 2 - edgeMargin;
         if (Title != null)
         {
@@ -75,10 +85,19 @@ public class WindowController : MonoBehaviour
             nextElementY -= edgeMargin;
         }
 
+        // Place row elements
         foreach(GameObject row in rows)
         {
+            // Recursively figure out the size of each child before you place it
+            WindowController rowWC = row.GetComponent<WindowController>();
+            if (rowWC != null)
+            {
+                rowWC.PositionElements();
+            }
+
             float halfElementHeight = row.GetComponent<RectTransform>().rect.height / 2;
             nextElementY -= halfElementHeight;
+            Debug.Log("Placing: " + row.name);
             row.transform.localPosition = new Vector2(0f, nextElementY);
             nextElementY -= halfElementHeight;
             nextElementY -= rowMargin;
@@ -86,20 +105,24 @@ public class WindowController : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    public void InitializeWindow()
     {
-        PositionElements();
-    }
+        if (tab != null)
+        {
+            tab.window = this;
+            tab.SendMessage("DeployTab");
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-        // if(Anything is moved or re-scaled)
-        // {
-        
+        foreach (GameObject row in rows)
+        {
+            WindowController rowWC = row.GetComponent<WindowController>();
+            if (rowWC != null)
+            {
+                rowWC.parent = this.gameObject;
+                rowWC.InitializeWindow();
+            }
+        }
+
         PositionElements();
-        
-        // }
     }
 }

@@ -285,6 +285,7 @@ GameObject:
   - component: {fileID: 1056499553}
   - component: {fileID: 1056499552}
   - component: {fileID: 1056499551}
+  - component: {fileID: 1056499555}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -372,6 +373,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1056499555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056499550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1394dc84c4371a649aa69d77bf3ab732, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainWindow: {fileID: 3195479499489345427}
 --- !u!1 &1458296801
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,7 +640,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a9d1fd7ac86f7e4bb1f1a2f4fee0edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 1056499553}
+  parent: {fileID: 1056499550}
+  tab: {fileID: 2007831334}
   Title: {fileID: 3195479500842959870}
   rows:
   - {fileID: 4901627730352775670}
@@ -960,7 +975,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a9d1fd7ac86f7e4bb1f1a2f4fee0edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 0}
+  parent: {fileID: 0}
+  tab: {fileID: 0}
   Title: {fileID: 4901627729051690600}
   rows:
   - {fileID: 4901627729893421966}
