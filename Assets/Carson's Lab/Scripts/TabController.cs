@@ -5,38 +5,42 @@ using UnityEngine.UI;
 
 public class TabController : MonoBehaviour
 {
-    public Image neck;
-    public Image headBorder;
-    public Image headFace;
+    public Image tabBorder;
+    public Image tabFace;
 
     // TODO: Maybe move this value to some globals game-variables script so it can be reused. Especially if I want to save data between scenes.
-    public float border_width;
-    public float tab_height;
+    public float borderWidth;
+    public float tabHeight;
 
-    public void ConstructTab(float window_width, int num_tabs, int tab_index)
+    public WindowController window;
+
+    public void ConstructTab(int numTabs, int tabIndex)
     {
-        float neckHeight = neck.sprite.border[3] / neck.pixelsPerUnitMultiplier;
-        neck.transform.localPosition = Vector2.zero;
-        neck.GetComponent<RectTransform>().sizeDelta = new Vector2(window_width, neckHeight);
+        float windowWidth = window.GetComponent<RectTransform>().rect.width;
+        float tabWidth = (windowWidth * 1f / numTabs);
+        
+        Vector2 tabSize = new Vector2(tabWidth, tabHeight);
+        tabBorder.GetComponent<RectTransform>().sizeDelta = tabSize;
 
-        float tab_width = (window_width * 1f / num_tabs);
-        // Left side of window, plus at least half a tab width to center it, offset by the size of the other tabs
-        Vector2 head_position = new Vector2((-1 * window_width / 2) + tab_width * (0.5f + tab_index), tab_height / 2 - neckHeight / 2);
-        headBorder.transform.localPosition = head_position;
+        Image windowImage = window.GetComponent<Image>();
+        float neckHeight = (float)windowImage.sprite.border[3] / windowImage.pixelsPerUnitMultiplier;   // Size of top border of window image
+        Vector2 tabPosition = new Vector2(
+            (-1 * windowWidth / 2) + tabWidth * (0.5f + tabIndex),
+            window.GetComponent<RectTransform>().rect.height / 2 + tabSize.y / 2 - neckHeight / 2
+            );
 
-        Vector2 head_size = new Vector2(tab_width, tab_height);
-        headBorder.GetComponent<RectTransform>().sizeDelta = head_size;
+        tabBorder.transform.localPosition = new Vector3(tabPosition.x, tabPosition.y, -1f);     // Hopefully behind the window
 
-        float adjustedBorder = border_width / headBorder.pixelsPerUnitMultiplier;
-        headFace.transform.localPosition = new Vector2(head_position.x, head_position.y - adjustedBorder / 2);
-        headFace.GetComponent<RectTransform>().sizeDelta = new Vector2(head_size.x - adjustedBorder * 2, head_size.y - adjustedBorder);
+        float adjustedBorder = borderWidth / tabBorder.pixelsPerUnitMultiplier;
+        tabFace.transform.localPosition = new Vector3(tabPosition.x, tabPosition.y - adjustedBorder / 2, 1f);   // Hopefully in front of both the border and the window
+        tabFace.GetComponent<RectTransform>().sizeDelta = new Vector2(tabSize.x - adjustedBorder * 2, tabSize.y - adjustedBorder);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        // Makes the tab think it belongs in the middle of a 300-unit-wide window with 3 tabs, which should make it 100 units wide and centered at X=0
-        ConstructTab(300f, 3, 1);
+        // Tells the tab to act like it is the middle of three tabs.
+        ConstructTab(3, 1);
     }
 
     // Update is called once per frame
