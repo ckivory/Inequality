@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class WindowController : MonoBehaviour
 {
-    // Reference to the parent, to be used for sorting elements.
+    // Reference to the parent, to be set by the parent on initialization
+    [HideInInspector]
     public GameObject parent;
 
     // Optional
@@ -78,7 +79,7 @@ public class WindowController : MonoBehaviour
         float nextElementY = windowHeight / 2 - edgeMargin;
         if (Title != null)
         {
-            float halfTitleHeight = Title.GetComponent<RectTransform>().rect.height / 2;
+            float halfTitleHeight = Title.preferredHeight / 2;
             nextElementY -= halfTitleHeight;
             Title.transform.localPosition = new Vector2(0f,  nextElementY);
             nextElementY -= halfTitleHeight;
@@ -97,7 +98,6 @@ public class WindowController : MonoBehaviour
 
             float halfElementHeight = row.GetComponent<RectTransform>().rect.height / 2;
             nextElementY -= halfElementHeight;
-            Debug.Log("Placing: " + row.name);
             row.transform.localPosition = new Vector2(0f, nextElementY);
             nextElementY -= halfElementHeight;
             nextElementY -= rowMargin;

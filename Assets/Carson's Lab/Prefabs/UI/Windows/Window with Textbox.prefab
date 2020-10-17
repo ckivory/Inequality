@@ -90,6 +90,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a9d1fd7ac86f7e4bb1f1a2f4fee0edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parent: {fileID: 0}
+  tab: {fileID: 0}
   Title: {fileID: 3195479500017392171}
   rows:
   - {fileID: 4901627730132236323}
@@ -106,6 +108,7 @@ GameObject:
   - component: {fileID: 3195479500017392170}
   - component: {fileID: 3195479500017392180}
   - component: {fileID: 3195479500017392171}
+  - component: {fileID: 8683012670034704415}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -174,6 +177,19 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Window Title
+--- !u!114 &8683012670034704415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3195479500017392169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a254f5d9814265640b946751cd6ba925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSize: {x: 200, y: 60}
 --- !u!1001 &3195479499604844978
 PrefabInstance:
   m_ObjectHideFlags: 0

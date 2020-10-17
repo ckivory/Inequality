@@ -9,6 +9,7 @@ public class WindowManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        mainWindow.parent = gameObject;
         mainWindow.InitializeWindow();
     }
 
