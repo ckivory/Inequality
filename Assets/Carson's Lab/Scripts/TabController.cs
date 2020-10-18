@@ -17,9 +17,13 @@ public class TabController : MonoBehaviour
     public float tabHeight;
 
     private int numTabs = -1;
-    private int tabIndex = -1;
+    [HideInInspector]
+    public int tabIndex = -1;
 
-    private bool positioned = false;
+    private void OnMouseDown()
+    {
+        Debug.Log("Clicked tab: " + gameObject.name);
+    }
 
     void PositionTab(int[] tabData)
     {
@@ -37,7 +41,8 @@ public class TabController : MonoBehaviour
             float tabWidth = (windowWidth * 1f / numTabs);
 
             Vector2 tabSize = new Vector2(tabWidth, tabHeight);
-            tabBorder.GetComponent<RectTransform>().sizeDelta = tabSize;
+            tabBorder.rectTransform.sizeDelta = tabSize;
+            GetComponent<RectTransform>().sizeDelta = tabBorder.rectTransform.sizeDelta;
 
             Image windowImage = window.background;
             float neckHeight = (float)windowImage.sprite.border[3] / windowImage.pixelsPerUnitMultiplier;   // Size of top border of window image

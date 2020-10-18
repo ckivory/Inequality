@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PortfolioController : MonoBehaviour
 {
@@ -14,9 +15,15 @@ public class PortfolioController : MonoBehaviour
     WindowController activeWindow;
 
     public void SetActiveWindow(int windowIndex)
-    {   
+    {
+        if(activeWindow != null)
+        {
+            activeWindow.tab.tabFace.GetComponent<Button>().interactable = true;
+        }
+
         activeWindow = windows[windowIndex];
-        activeWindow.transform.SetAsFirstSibling();
+        activeWindow.transform.SetAsLastSibling();
+        activeWindow.tab.tabFace.GetComponent<Button>().interactable = false;
     }
 
     public void InitializeWindows()
