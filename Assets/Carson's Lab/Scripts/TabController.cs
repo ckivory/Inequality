@@ -16,54 +16,52 @@ public class TabController : MonoBehaviour
     public float borderWidth;
     public float tabHeight;
 
-    public void PositionTab(int[] tabData)
+    private int numTabs = -1;
+    private int tabIndex = -1;
+
+    private bool positioned = false;
+
+    void PositionTab(int[] tabData)
     {
-        int numTabs = tabData[0];
-        int tabIndex = tabData[1];
-        float windowWidth = window.GetComponent<RectTransform>().rect.width;
-        float tabWidth = (windowWidth * 1f / numTabs);
+        numTabs = tabData[0];
+        tabIndex = tabData[1];
 
-        Vector2 tabSize = new Vector2(tabWidth, tabHeight);
-        tabBorder.GetComponent<RectTransform>().sizeDelta = tabSize;
+        RepositionTab();
+    }
 
-        Image windowImage = window.GetComponent<Image>();
-        float neckHeight = (float)windowImage.sprite.border[3] / windowImage.pixelsPerUnitMultiplier;   // Size of top border of window image
-        Vector2 tabPosition = new Vector2(
-            (-1 * windowWidth / 2) + tabWidth * (0.5f + tabIndex),
-            window.GetComponent<RectTransform>().rect.height / 2 + tabSize.y / 2 - neckHeight / 2
-            );
+    public void RepositionTab()
+    {
+        if(numTabs > 0)
+        {
+            float windowWidth = window.GetComponent<RectTransform>().rect.width;
+            float tabWidth = (windowWidth * 1f / numTabs);
 
-        tabBorder.transform.localPosition = new Vector2(tabPosition.x, tabPosition.y);
+            Vector2 tabSize = new Vector2(tabWidth, tabHeight);
+            tabBorder.GetComponent<RectTransform>().sizeDelta = tabSize;
 
-        float adjustedBorder = borderWidth / tabBorder.pixelsPerUnitMultiplier;
-        tabFace.GetComponent<RectTransform>().sizeDelta = new Vector2(tabSize.x - adjustedBorder * 2, tabSize.y - adjustedBorder);
-        tabFace.transform.localPosition = new Vector3(tabPosition.x, tabPosition.y - adjustedBorder / 2);
+            Image windowImage = window.background;
+            float neckHeight = (float)windowImage.sprite.border[3] / windowImage.pixelsPerUnitMultiplier;   // Size of top border of window image
+            Vector2 tabPosition = new Vector2(
+                (-1 * windowWidth / 2) + tabWidth * (0.5f + tabIndex),
+                window.GetComponent<RectTransform>().rect.height / 2 + tabSize.y / 2 - neckHeight / 2
+                );
+
+            tabBorder.transform.localPosition = new Vector2(tabPosition.x, tabPosition.y);
+
+            float adjustedBorder = borderWidth / tabBorder.pixelsPerUnitMultiplier;
+            tabFace.GetComponent<RectTransform>().sizeDelta = new Vector2(tabSize.x - adjustedBorder * 2, tabSize.y - adjustedBorder);
+            tabFace.transform.localPosition = new Vector3(tabPosition.x, tabPosition.y - adjustedBorder / 2);
+        }
     }
 
     public void DeployTab()
     {
-        // Moves tab border to back of Canvas
-        tabBorder.transform.SetParent(window.parent.transform);
-        tabBorder.transform.SetSiblingIndex(0);
+        // Moves tab border to back of the window
+        tabBorder.transform.SetParent(window.transform);
+        tabBorder.transform.SetAsFirstSibling();
 
-        // Moves tab face to front of Canvas
-        tabFace.transform.SetParent(window.parent.transform);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        /*
-        if(tab needs to be moved)
-        {
-            PositionTab(new int[] {3, 1});
-        }
-        */
+        // Moves tab face to front of the window
+        tabFace.transform.SetParent(window.transform);
+        tabFace.transform.SetAsLastSibling();
     }
 }

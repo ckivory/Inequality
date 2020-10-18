@@ -9,6 +9,8 @@ public class WindowController : MonoBehaviour
     [HideInInspector]
     public GameObject parent;
 
+    public Image background;
+
     // Optional
     public TabController tab;
 
@@ -65,14 +67,15 @@ public class WindowController : MonoBehaviour
             windowHeight += rowMargin * rows.Count - 1;
         }
 
-        // Debug.Log("Changing Window size to: (" + windowWidth + ", " + windowHeight + ")");
         transform.localPosition = new Vector2(0f, 0f);
-        GetComponent<RectTransform>().sizeDelta = new Vector2(windowWidth, windowHeight);
+        background.rectTransform.localPosition = new Vector2(0f, 0f);
+        background.rectTransform.sizeDelta = new Vector2(windowWidth, windowHeight);
+        GetComponent<RectTransform>().sizeDelta = background.rectTransform.sizeDelta;
 
         // Move tab to correct location
-        if (tab != null)
+        if(!(tab == null))
         {
-            tab.SendMessage("PositionTab", new int[] { 3, 1 });
+            tab.RepositionTab();
         }
 
         // Place Title

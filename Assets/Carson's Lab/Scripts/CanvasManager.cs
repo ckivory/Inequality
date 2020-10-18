@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WindowManager : MonoBehaviour
+public class CanvasManager : MonoBehaviour
 {
-    public WindowController mainWindow;
+    public PortfolioController PC;
 
     // Start is called before the first frame update
     void Start()
     {
-        mainWindow.parent = gameObject;
-        mainWindow.InitializeWindow();
+        PC.parent = gameObject;
+        PC.InitializeWindows();
     }
 
     // Update is called once per frame
     void Update()
     {
-        mainWindow.PositionElements();
+        PC.UpdateMainWindow();
     }
 }
