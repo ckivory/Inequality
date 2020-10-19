@@ -7,7 +7,7 @@ public class TabController : MonoBehaviour
 {
     // Reference to the parent. Should be set from the parent;
     [HideInInspector]
-    public WindowController window;
+    public PortfolioController PC;
 
     public Image tabBorder;
     public Image tabFace;
@@ -25,10 +25,10 @@ public class TabController : MonoBehaviour
         Debug.Log("Clicked tab: " + gameObject.name);
     }
 
-    void PositionTab(int[] tabData)
+    public void PositionTab(int newNumTabs, int newTabIndex)
     {
-        numTabs = tabData[0];
-        tabIndex = tabData[1];
+        numTabs = newNumTabs;
+        tabIndex = newTabIndex;
 
         RepositionTab();
     }
@@ -37,18 +37,18 @@ public class TabController : MonoBehaviour
     {
         if(numTabs > 0)
         {
-            float windowWidth = window.GetComponent<RectTransform>().rect.width;
+            float windowWidth = PC.GetActiveWindow().GetComponent<RectTransform>().rect.width;
             float tabWidth = (windowWidth * 1f / numTabs);
 
             Vector2 tabSize = new Vector2(tabWidth, tabHeight);
             tabBorder.rectTransform.sizeDelta = tabSize;
             GetComponent<RectTransform>().sizeDelta = tabBorder.rectTransform.sizeDelta;
 
-            Image windowImage = window.background;
+            Image windowImage = PC.GetActiveWindow().background;
             float neckHeight = (float)windowImage.sprite.border[3] / windowImage.pixelsPerUnitMultiplier;   // Size of top border of window image
             Vector2 tabPosition = new Vector2(
                 (-1 * windowWidth / 2) + tabWidth * (0.5f + tabIndex),
-                window.GetComponent<RectTransform>().rect.height / 2 + tabSize.y / 2 - neckHeight / 2
+                PC.GetActiveWindow().GetComponent<RectTransform>().rect.height / 2 + tabSize.y / 2 - neckHeight / 2
                 );
 
             tabBorder.transform.localPosition = new Vector2(tabPosition.x, tabPosition.y);
@@ -62,11 +62,11 @@ public class TabController : MonoBehaviour
     public void DeployTab()
     {
         // Moves tab border to back of the window
-        tabBorder.transform.SetParent(window.transform);
+        tabBorder.transform.SetParent(PC.transform);
         tabBorder.transform.SetAsFirstSibling();
 
         // Moves tab face to front of the window
-        tabFace.transform.SetParent(window.transform);
+        tabFace.transform.SetParent(PC.transform);
         tabFace.transform.SetAsLastSibling();
     }
 }

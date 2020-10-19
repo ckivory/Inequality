@@ -12,9 +12,6 @@ public class WindowController : MonoBehaviour
     public Image background;
 
     // Optional
-    public TabController tab;
-
-    // Optional
     public Text Title;
 
     // List of rows of content, which may include sub-layouts with multiple columns.
@@ -72,12 +69,6 @@ public class WindowController : MonoBehaviour
         background.rectTransform.sizeDelta = new Vector2(windowWidth, windowHeight);
         GetComponent<RectTransform>().sizeDelta = background.rectTransform.sizeDelta;
 
-        // Move tab to correct location
-        if(!(tab == null))
-        {
-            tab.RepositionTab();
-        }
-
         // Place Title
         float nextElementY = windowHeight / 2 - edgeMargin;
         if (Title != null)
@@ -110,12 +101,6 @@ public class WindowController : MonoBehaviour
     // Start is called before the first frame update
     public void InitializeWindow()
     {
-        if (tab != null)
-        {
-            tab.window = this;
-            tab.SendMessage("DeployTab");
-        }
-
         foreach (GameObject row in rows)
         {
             WindowController rowWC = row.GetComponent<WindowController>();

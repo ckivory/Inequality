@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,39 +10,76 @@ public class PortfolioController : MonoBehaviour
     [HideInInspector]
     public GameObject parent;
 
-    // TODO: Using a list of windows, display one at a time depending on which tab was most recently clicked
     public List<WindowController> windows;
+    public List<TabController> tabs;
 
     WindowController activeWindow;
 
     public void SetActiveWindow(int windowIndex)
     {
+        if(windowIndex < 0 || windowIndex > windows.Count - 1)
+        {
+            throw new Exception("Cannot switch to a window that doesn't exist");
+        }
+
         if(activeWindow != null)
         {
-            activeWindow.tab.tabFace.GetComponent<Button>().interactable = true;
+            tabs[windows.IndexOf(activeWindow)].tabFace.GetComponent<Button>().interactable = true;
         }
 
         activeWindow = windows[windowIndex];
         activeWindow.transform.SetAsLastSibling();
-        activeWindow.tab.tabFace.GetComponent<Button>().interactable = false;
+        tabs[windowIndex].tabFace.GetComponent<Button>().interactable = false;
+
+        foreach (WindowController window in windows)
+        {
+            window.gameObject.SetActive(false);
+        }
+        activeWindow.gameObject.SetActive(true);
+    }
+
+    public WindowController GetActiveWindow()
+    {
+        return activeWindow;
     }
 
     public void InitializeWindows()
     {
-        int i = 0;
-        foreach (WindowController window in windows)
+        for(int i = 0; i < windows.Count; i++)
         {
+            WindowController window = windows[i];
             window.parent = gameObject;
             window.InitializeWindow();
-            window.tab.SendMessage("PositionTab", new int[] { windows.Count, i });
             i++;
         }
 
         SetActiveWindow(0);
+
+        for(int i = 0; i < tabs.Count; i++)
+        {
+            TabController tab = tabs[i];
+            tab.PC = this;
+            tab.DeployTab();
+            tab.PositionTab(tabs.Count, i);
+        }
+
+        
     }
 
     public void UpdateMainWindow()
     {
-        activeWindow.PositionElements();
+        if(activeWindow != null)
+        {
+            activeWindow.PositionElements();
+        }
+        else
+        {
+            Debug.Log("Active window is null");
+        }
+
+        foreach(TabController tab in tabs)
+        {
+            tab.RepositionTab();
+        }
     }
 }
