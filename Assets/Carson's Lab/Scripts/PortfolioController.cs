@@ -25,6 +25,9 @@ public class PortfolioController : MonoBehaviour
         if(activeWindow != null)
         {
             tabs[windows.IndexOf(activeWindow)].tabFace.GetComponent<Button>().interactable = true;
+
+            // Move most recent tab to front of all borders, but back of main window
+            tabs[windows.IndexOf(activeWindow)].tabFace.transform.SetSiblingIndex(tabs.Count);
         }
 
         activeWindow = windows[windowIndex];
@@ -36,6 +39,9 @@ public class PortfolioController : MonoBehaviour
             window.gameObject.SetActive(false);
         }
         activeWindow.gameObject.SetActive(true);
+
+        // Move current tab face to front of portfolio's children
+        tabs[windowIndex].tabFace.transform.SetAsLastSibling();
     }
 
     public WindowController GetActiveWindow()
