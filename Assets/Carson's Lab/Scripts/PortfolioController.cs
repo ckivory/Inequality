@@ -72,10 +72,6 @@ public class PortfolioController : MonoBehaviour
         {
             activeWindow.PositionElements();
         }
-        else
-        {
-            Debug.Log("Active window is null");
-        }
 
         foreach(TabController tab in tabs)
         {
