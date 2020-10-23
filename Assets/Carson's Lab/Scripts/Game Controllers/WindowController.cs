@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WindowController : MonoBehaviour
+public class WindowController : ColumnController
 {
     // Reference to the parent, to be set by the parent on initialization
     [HideInInspector]
