@@ -587,6 +587,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a9d1fd7ac86f7e4bb1f1a2f4fee0edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parent: {fileID: 0}
+  background: {fileID: 0}
   Title: {fileID: 467299919}
   rows:
   - {fileID: 1181805223}
@@ -643,10 +645,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1289306407}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c07d967eb95e0942ac91c8b69fd9bc9, type: 3}
+  m_Script: {fileID: 11500000, guid: 129e84773aaaba441840ff22295e58ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ToggleOptions: []
 --- !u!114 &1289306410
 MonoBehaviour:
   m_ObjectHideFlags: 0
