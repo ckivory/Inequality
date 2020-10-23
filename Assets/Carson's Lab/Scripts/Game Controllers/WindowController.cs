@@ -81,9 +81,8 @@ public class WindowController : MonoBehaviour
         }
 
         // Place row elements
-        foreach(GameObject row in rows)
+        foreach (GameObject row in rows)
         {
-            // Recursively figure out the size of each child before you place it
             WindowController rowWC = row.GetComponent<WindowController>();
             if (rowWC != null)
             {

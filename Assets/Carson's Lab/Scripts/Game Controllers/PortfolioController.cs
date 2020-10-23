@@ -12,6 +12,9 @@ public class PortfolioController : MonoBehaviour
 
     public List<WindowController> windows;
     public List<TabController> tabs;
+    public float tabHeight;
+
+    public float borderWidth;
 
     WindowController activeWindow;
 
@@ -39,6 +42,15 @@ public class PortfolioController : MonoBehaviour
             window.gameObject.SetActive(false);
         }
         activeWindow.gameObject.SetActive(true);
+
+        for (int i = 0; i < tabs.Count; i++)
+        {
+            TabController tab = tabs[i];
+            if(tab.tabIndex > -1)
+            {
+                tab.tabLabel.SetFontSize(tab.tabLabel.preferredFontSize);
+            }
+        }
 
         // Move current tab face to front of portfolio's children
         tabs[windowIndex].tabFace.transform.SetAsLastSibling();

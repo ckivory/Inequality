@@ -12,13 +12,15 @@ public class TabController : MonoBehaviour
     public Image tabBorder;
     public Image tabFace;
 
-    // TODO: Maybe move this value to some globals game-variables script so it can be reused. Especially if I want to save data between scenes.
-    public float borderWidth;
-    public float tabHeight;
+    public TextBoxController tabLabel;
+
+    
 
     private int numTabs = -1;
     [HideInInspector]
     public int tabIndex = -1;
+
+    private float neckHeight;
 
     private void OnMouseDown()
     {
@@ -40,12 +42,12 @@ public class TabController : MonoBehaviour
             float windowWidth = PC.GetActiveWindow().GetComponent<RectTransform>().rect.width;
             float tabWidth = (windowWidth * 1f / numTabs);
 
-            Vector2 tabSize = new Vector2(tabWidth, tabHeight);
+            Vector2 tabSize = new Vector2(tabWidth, PC.tabHeight);
             tabBorder.rectTransform.sizeDelta = tabSize;
             GetComponent<RectTransform>().sizeDelta = tabBorder.rectTransform.sizeDelta;
 
             Image windowImage = PC.GetActiveWindow().background;
-            float neckHeight = (float)windowImage.sprite.border[3] / windowImage.pixelsPerUnitMultiplier;   // Size of top border of window image
+            neckHeight = (float)windowImage.sprite.border[3] / windowImage.pixelsPerUnitMultiplier;   // Size of top border of window image
             Vector2 tabPosition = new Vector2(
                 (-1 * windowWidth / 2) + tabWidth * (0.5f + tabIndex),
                 PC.GetActiveWindow().GetComponent<RectTransform>().rect.height / 2 + tabSize.y / 2 - neckHeight / 2
@@ -53,9 +55,13 @@ public class TabController : MonoBehaviour
 
             tabBorder.transform.localPosition = new Vector2(tabPosition.x, tabPosition.y);
 
-            float adjustedBorder = borderWidth / tabBorder.pixelsPerUnitMultiplier;
+            float adjustedBorder = PC.borderWidth / tabBorder.pixelsPerUnitMultiplier;
             tabFace.GetComponent<RectTransform>().sizeDelta = new Vector2(tabSize.x - adjustedBorder * 2, tabSize.y - adjustedBorder);
             tabFace.transform.localPosition = new Vector3(tabPosition.x, tabPosition.y - adjustedBorder / 2);
+
+            // Update container size
+            tabLabel.containerSize = tabFace.GetComponent<RectTransform>().sizeDelta - new Vector2(neckHeight, neckHeight);
+            tabLabel.FormatText();
         }
     }
 
@@ -68,5 +74,8 @@ public class TabController : MonoBehaviour
         // Moves tab face to front of the window
         tabFace.transform.SetParent(PC.transform);
         tabFace.transform.SetAsLastSibling();
+
+        tabLabel.shrinkFontOnOverflow = true;
+        tabLabel.InitializeTextBox();
     }
 }
