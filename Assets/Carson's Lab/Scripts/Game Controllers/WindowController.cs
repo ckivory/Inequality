@@ -61,7 +61,7 @@ public class WindowController : MonoBehaviour
         // Row margins
         if (rows.Count > 1)
         {
-            windowHeight += rowMargin * rows.Count - 1;
+            windowHeight += rowMargin * (rows.Count - 1);
         }
 
         transform.localPosition = new Vector2(0f, 0f);
@@ -71,7 +71,7 @@ public class WindowController : MonoBehaviour
 
         // Place Title
         float nextElementY = windowHeight / 2 - edgeMargin;
-        if (Title != null)
+        if (Title != null && rows.Count > 0)
         {
             float halfTitleHeight = Title.preferredHeight / 2;
             nextElementY -= halfTitleHeight;
