@@ -17,5 +17,9 @@ public abstract class LayoutController : MonoBehaviour
     // Float for how much space should be between rows
     public float contentMargin;
 
+    public abstract Vector2 ContentDimensions();
+
+    public abstract void PositionElements();
+
     public abstract void InitializeLayout();
 }

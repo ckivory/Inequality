@@ -1713,7 +1713,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Window 1 Title Which is long to test for long titles
+  m_Text: Window 1 Title Which is long to test the behavior of long windows that
+    shrink their text when they get too large rather than ellipsizing
 --- !u!222 &1617282765
 CanvasRenderer:
   m_ObjectHideFlags: 0

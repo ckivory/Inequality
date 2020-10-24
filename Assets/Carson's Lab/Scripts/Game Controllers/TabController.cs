@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class TabController : MonoBehaviour
 {
+    // TODO: Figure out why tab labels are not resizing correctly based on the size of the window that is being switched to.
+
+
     // Reference to the parent. Should be set from the parent;
     [HideInInspector]
     public PortfolioController PC;

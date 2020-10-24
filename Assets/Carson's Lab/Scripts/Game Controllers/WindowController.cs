@@ -10,7 +10,7 @@ public class WindowController : ColumnController
     // Optional
     public TextBoxController Title;
 
-    Vector2 ContentDimensions()
+    public override Vector2 ContentDimensions()
     {
         float contentWidth = 0f;
         float contentHeight = 0f;
@@ -31,7 +31,6 @@ public class WindowController : ColumnController
             {
                 Text rowText = rowTBC.GetComponent<Text>();
                 rowSize = rowTBC.GetEffectiveSize();
-                Debug.Log("Row Size: " + rowSize);
             }
             
             contentWidth = Mathf.Max(contentWidth, rowSize.x);
@@ -41,7 +40,7 @@ public class WindowController : ColumnController
         return new Vector2(contentWidth, contentHeight);
     }
 
-    public void PositionElements()
+    public override void PositionElements()
     {
         // Tell children to recursively set their constraints before doing so yourself
         foreach(GameObject row in content)
