@@ -100,19 +100,4 @@ public class WindowController : ColumnController
             nextElementY -= contentMargin;
         }
     }
-
-    public override void InitializeLayout()
-    {
-        foreach (GameObject row in content)
-        {
-            WindowController rowWC = row.GetComponent<WindowController>();
-            if (rowWC != null)
-            {
-                rowWC.parent = this.gameObject;
-                rowWC.InitializeLayout();
-            }
-        }
-
-        PositionElements();
-    }
 }

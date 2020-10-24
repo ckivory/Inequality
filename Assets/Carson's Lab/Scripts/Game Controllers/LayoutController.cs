@@ -21,5 +21,18 @@ public abstract class LayoutController : MonoBehaviour
 
     public abstract void PositionElements();
 
-    public abstract void InitializeLayout();
+    public virtual void InitializeLayout()
+    {
+        foreach (GameObject element in content)
+        {
+            LayoutController elemLC = element.GetComponent<LayoutController>();
+            if (elemLC != null)
+            {
+                elemLC.parent = this.gameObject;
+                elemLC.InitializeLayout();
+            }
+        }
+
+        PositionElements();
+    }
 }

@@ -13,9 +13,4 @@ public class RowController : LayoutController
     {
         throw new System.NotImplementedException();
     }
-
-    public override void InitializeLayout()
-    {
-        throw new System.NotImplementedException();
-    }
 }
