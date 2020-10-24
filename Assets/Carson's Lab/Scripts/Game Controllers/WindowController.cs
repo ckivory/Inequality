@@ -5,17 +5,12 @@ using UnityEngine.UI;
 
 public class WindowController : ColumnController
 {
-    // Reference to the parent, to be set by the parent on initialization
-    [HideInInspector]
-    public GameObject parent;
-
     public Image background;
 
     // Optional
     public Text Title;
 
-    // List of rows of content, which may include sub-layouts with multiple columns.
-    public List<GameObject> rows;
+    
 
     // Float for how much space should be at the edges of the window and around the title
     public float edgeMargin;
@@ -34,7 +29,7 @@ public class WindowController : ColumnController
             contentHeight = Title.GetComponent<RectTransform>().rect.height;
         }
 
-        foreach (GameObject row in rows)
+        foreach (GameObject row in content)
         {
             Rect rowRect = row.GetComponent<RectTransform>().rect;
             contentWidth = Mathf.Max(contentWidth, rowRect.width);
@@ -53,15 +48,15 @@ public class WindowController : ColumnController
         float windowHeight = dimensions.y + (edgeMargin * 2);
 
         // Extra edge margin between title and first row
-        if(Title != null && rows.Count > 0)
+        if(Title != null && content.Count > 0)
         {
             windowHeight += edgeMargin;
         }
 
         // Row margins
-        if (rows.Count > 1)
+        if (content.Count > 1)
         {
-            windowHeight += rowMargin * (rows.Count - 1);
+            windowHeight += rowMargin * (content.Count - 1);
         }
 
         transform.localPosition = new Vector2(0f, 0f);
@@ -71,7 +66,7 @@ public class WindowController : ColumnController
 
         // Place Title
         float nextElementY = windowHeight / 2 - edgeMargin;
-        if (Title != null && rows.Count > 0)
+        if (Title != null && content.Count > 0)
         {
             float halfTitleHeight = Title.preferredHeight / 2;
             nextElementY -= halfTitleHeight;
@@ -81,7 +76,7 @@ public class WindowController : ColumnController
         }
 
         // Place row elements
-        foreach (GameObject row in rows)
+        foreach (GameObject row in content)
         {
             WindowController rowWC = row.GetComponent<WindowController>();
             if (rowWC != null)
@@ -97,10 +92,9 @@ public class WindowController : ColumnController
         }
     }
 
-    // Start is called before the first frame update
     public void InitializeWindow()
     {
-        foreach (GameObject row in rows)
+        foreach (GameObject row in content)
         {
             WindowController rowWC = row.GetComponent<WindowController>();
             if (rowWC != null)
