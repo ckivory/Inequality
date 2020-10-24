@@ -12,46 +12,42 @@ public class WindowController : ColumnController
 
     public override Vector2 ContentDimensions()
     {
-        float contentWidth = 0f;
-        float contentHeight = 0f;
+        // Get dimensions of contents
+        Vector2 contentDimensions = base.ContentDimensions();
+        float contentWidth = contentDimensions.x;
+        float contentHeight = contentDimensions.y;
 
+        // Adjust for title if necessary
         if (Title != null)
         {
             Vector2 titleSize = Title.GetEffectiveSize();
-            contentWidth = titleSize.x;
-            contentHeight = titleSize.y;
-        }
-
-        foreach (GameObject row in content)
-        {
-            TextBoxController rowTBC = row.GetComponent<TextBoxController>();
-            Vector2 rowSize = row.GetComponent<RectTransform>().sizeDelta;
-
-            if (rowTBC != null)
-            {
-                Text rowText = rowTBC.GetComponent<Text>();
-                rowSize = rowTBC.GetEffectiveSize();
-            }
-            
-            contentWidth = Mathf.Max(contentWidth, rowSize.x);
-            contentHeight += rowSize.y;
+            contentWidth = Mathf.Max(contentWidth, titleSize.x);
+            contentHeight += titleSize.y;
         }
         
         return new Vector2(contentWidth, contentHeight);
     }
 
-    public override void PositionElements()
+    /*
+    * To leverage the ColumnController positioning function, I could try to reconfigure the process so that it starts with a reference to
+    * the bottom of the window and then places in order towards the top, which would allow me to do that whole process for the WindowController
+    * just as easily. So step 1 is calculate all relevant constraints, which will be different for the two controller types. Step 1 is to use the
+    * base PositionElements method to place all elements except for the title, which will then be placed in step 3.
+    */
+
+    public override void SetConstraints()
     {
         // Tell children to recursively set their constraints before doing so yourself
-        foreach(GameObject row in content)
+        foreach (GameObject row in content)
         {
-            WindowController rowWC = row.GetComponent<WindowController>();
-            if (rowWC != null)
+            LayoutController rowLC = row.GetComponent<LayoutController>();
+            if (rowLC != null)
             {
-                rowWC.PositionElements();
+                rowLC.RepositionElements();
             }
         }
 
+        // Figure out size of content
         Vector2 dimensions = ContentDimensions();
 
         // Edge margins
@@ -59,7 +55,7 @@ public class WindowController : ColumnController
         float windowHeight = dimensions.y + (edgeMargin * 2);
 
         // Extra edge margin between title and first row
-        if(Title != null && content.Count > 0)
+        if (Title != null && content.Count > 0)
         {
             windowHeight += edgeMargin;
         }
@@ -70,34 +66,27 @@ public class WindowController : ColumnController
             windowHeight += contentMargin * (content.Count - 1);
         }
 
-        transform.localPosition = new Vector2(0f, 0f);
+        // transform.localPosition = new Vector2(0f, 0f);
         background.rectTransform.localPosition = new Vector2(0f, 0f);
         background.rectTransform.sizeDelta = new Vector2(windowWidth, windowHeight);
         GetComponent<RectTransform>().sizeDelta = background.rectTransform.sizeDelta;
+    }
+
+    public override float PositionElements()
+    {
+        // Position all content elements and return the offset value to start at for any child-specific elements
+        float nextElementY = base.PositionElements();
 
         // Place Title
-        float nextElementY = windowHeight / 2 - edgeMargin;
         if (Title != null)
         {
             float halfTitleHeight = Title.GetEffectiveSize().y / 2;
-            nextElementY -= halfTitleHeight;
-            Title.transform.localPosition = new Vector2(0f,  nextElementY);
-            nextElementY -= halfTitleHeight;
-
-            if (content.Count > 0)
-            {
-                nextElementY -= edgeMargin;
-            }
+            nextElementY += halfTitleHeight;
+            Title.transform.localPosition = new Vector2(0f, nextElementY);
+            nextElementY += halfTitleHeight;
+            nextElementY += edgeMargin;
         }
 
-        // Place row elements
-        foreach (GameObject row in content)
-        {
-            float halfElementHeight = row.GetComponent<RectTransform>().rect.height / 2;
-            nextElementY -= halfElementHeight;
-            row.transform.localPosition = new Vector2(0f, nextElementY);
-            nextElementY -= halfElementHeight;
-            nextElementY -= contentMargin;
-        }
+        return nextElementY;
     }
 }

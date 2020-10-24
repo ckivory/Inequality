@@ -17,10 +17,23 @@ public abstract class LayoutController : MonoBehaviour
     // Float for how much space should be between rows
     public float contentMargin;
 
+    // Helper to get size of content elements without margins
     public abstract Vector2 ContentDimensions();
 
-    public abstract void PositionElements();
+    // Determine size and properties of layout
+    public abstract void SetConstraints();
 
+    // Position elements in reverse order and return last element offset in whichever dimension the layout uses
+    public abstract float PositionElements();
+
+    // Determine constraints for window and then do the work to move everything into place
+    public void RepositionElements()
+    {
+        SetConstraints();
+        PositionElements();
+    }
+
+    // Set parent of each child to self and place layout in initial configuration
     public virtual void InitializeLayout()
     {
         foreach (GameObject element in content)
@@ -33,6 +46,8 @@ public abstract class LayoutController : MonoBehaviour
             }
         }
 
+        // Figure out how big the window will need to be, where its components should go, etc.
+        SetConstraints();
         PositionElements();
     }
 }

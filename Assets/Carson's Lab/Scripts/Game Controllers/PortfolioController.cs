@@ -79,7 +79,7 @@ public class PortfolioController : MonoBehaviour
     {
         if(activeWindow != null)
         {
-            activeWindow.PositionElements();
+            activeWindow.RepositionElements();
         }
 
         foreach(TabController tab in tabs)

@@ -9,7 +9,12 @@ public class RowController : LayoutController
         throw new System.NotImplementedException();
     }
 
-    public override void PositionElements()
+    public override void SetConstraints()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override float PositionElements()
     {
         throw new System.NotImplementedException();
     }
