@@ -67,7 +67,7 @@ public class PortfolioController : MonoBehaviour
         {
             WindowController window = windows[i];
             window.parent = gameObject;
-            window.InitializeWindow();
+            window.InitializeLayout();
             i++;
         }
 

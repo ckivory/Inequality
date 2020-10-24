@@ -10,4 +10,12 @@ public abstract class LayoutController : MonoBehaviour
 
     // List of rows of content, which may include sub-layouts with multiple columns.
     public List<GameObject> content;
+
+    // Float for how much space should be at the edges of the window and around the title
+    public float edgeMargin;
+
+    // Float for how much space should be between rows
+    public float contentMargin;
+
+    public abstract void InitializeLayout();
 }

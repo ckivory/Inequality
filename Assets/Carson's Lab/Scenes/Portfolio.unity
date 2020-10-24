@@ -740,10 +740,10 @@ MonoBehaviour:
   content:
   - {fileID: 1228557900}
   - {fileID: 1425744066}
+  edgeMargin: 25
+  contentMargin: 15
   background: {fileID: 108284682}
   Title: {fileID: 0}
-  edgeMargin: 25
-  rowMargin: 20
 --- !u!222 &918501232
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2140,10 +2140,10 @@ MonoBehaviour:
   parent: {fileID: 0}
   content:
   - {fileID: 2093432155}
-  background: {fileID: 1509526059}
-  Title: {fileID: 1617282764}
   edgeMargin: 25
-  rowMargin: 20
+  contentMargin: 15
+  background: {fileID: 1509526059}
+  Title: {fileID: 1617282763}
 --- !u!222 &1869164976
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2207,10 +2207,10 @@ MonoBehaviour:
   parent: {fileID: 0}
   content:
   - {fileID: 227380346}
-  background: {fileID: 1095292708}
-  Title: {fileID: 317742767}
   edgeMargin: 20
-  rowMargin: 20
+  contentMargin: 15
+  background: {fileID: 1095292708}
+  Title: {fileID: 317742766}
 --- !u!222 &2093432158
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2338,10 +2338,10 @@ MonoBehaviour:
   parent: {fileID: 0}
   content:
   - {fileID: 775948680578414711}
-  background: {fileID: 5675288994589413297}
-  Title: {fileID: 775948681338416529}
   edgeMargin: 20
-  rowMargin: 20
+  contentMargin: 15
+  background: {fileID: 5675288994589413297}
+  Title: {fileID: 775948681338416521}
 --- !u!224 &775948679955540494
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2685,10 +2685,10 @@ MonoBehaviour:
   parent: {fileID: 0}
   content:
   - {fileID: 3211658666163308356}
-  background: {fileID: 7535664540274962562}
-  Title: {fileID: 3211658664925254306}
   edgeMargin: 20
-  rowMargin: 20
+  contentMargin: 15
+  background: {fileID: 7535664540274962562}
+  Title: {fileID: 3211658664925254330}
 --- !u!222 &3211658665704150331
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2848,10 +2848,10 @@ MonoBehaviour:
   parent: {fileID: 0}
   content:
   - {fileID: 3211658665704150332}
-  background: {fileID: 7535664540119989511}
-  Title: {fileID: 4957497087495370548}
   edgeMargin: 25
-  rowMargin: 20
+  contentMargin: 15
+  background: {fileID: 7535664540119989511}
+  Title: {fileID: 4957497087495370551}
 --- !u!222 &4957497086701636442
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3583,10 +3583,10 @@ MonoBehaviour:
   parent: {fileID: 0}
   content:
   - {fileID: 775948679955540495}
-  background: {fileID: 5675288996363420212}
-  Title: {fileID: 7105047338548643847}
   edgeMargin: 25
-  rowMargin: 20
+  contentMargin: 15
+  background: {fileID: 5675288996363420212}
+  Title: {fileID: 7105047338548643844}
 --- !u!1 &7535664539747841817
 GameObject:
   m_ObjectHideFlags: 0

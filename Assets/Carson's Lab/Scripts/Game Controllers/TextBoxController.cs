@@ -18,6 +18,19 @@ public class TextBoxController : MonoBehaviour
 
     protected string boxContent;
 
+    public Vector2 GetEffectiveSize()
+    {
+        float textWidth = 0;
+        float textHeight = 0;
+
+        if(boxRect != null)
+        {
+            textWidth = Mathf.Min(boxRect.rect.width, textComp.preferredWidth);
+            textHeight = Mathf.Min(boxRect.rect.height, textComp.GetComponent<Text>().preferredHeight);
+        }
+        return new Vector2(textWidth, textHeight);
+    }
+
     protected bool LineOverflow()
     {
         return textComp.preferredWidth > boxRect.rect.width;
