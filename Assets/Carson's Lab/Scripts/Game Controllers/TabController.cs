@@ -17,8 +17,6 @@ public class TabController : MonoBehaviour
 
     public TextBoxController tabLabel;
 
-    
-
     private int numTabs = -1;
     [HideInInspector]
     public int tabIndex = -1;
@@ -47,7 +45,7 @@ public class TabController : MonoBehaviour
 
             Vector2 tabSize = new Vector2(tabWidth, PC.tabHeight);
             tabBorder.rectTransform.sizeDelta = tabSize;
-            GetComponent<RectTransform>().sizeDelta = tabBorder.rectTransform.sizeDelta;
+            // GetComponent<RectTransform>().sizeDelta = tabBorder.rectTransform.sizeDelta;
 
             Image windowImage = PC.GetActiveWindow().background;
             neckHeight = (float)windowImage.sprite.border[3] / windowImage.pixelsPerUnitMultiplier;   // Size of top border of window image

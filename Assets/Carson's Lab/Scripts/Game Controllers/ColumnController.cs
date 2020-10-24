@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ColumnController : LayoutController
 {
+    // Get dimensions of content  as if there were no margins
     public override Vector2 ContentDimensions()
     {
         float contentWidth = 0f;
@@ -26,25 +27,19 @@ public class ColumnController : LayoutController
         return new Vector2(contentWidth, contentHeight);
     }
 
+
+    // Set window dimensions to content size + normal margins
     public override void SetConstraints()
     {
-        // Tell children to recursively set their constraints before doing so yourself
-        foreach (GameObject row in content)
-        {
-            LayoutController rowLC = row.GetComponent<LayoutController>();
-            if (rowLC != null)
-            {
-                rowLC.RepositionElements();
-            }
-        }
+        // Recursively set constraints of children
+        base.SetConstraints();
 
-        // Figure out size of content
-        Vector2 dimensions = ContentDimensions();
-
+        // Figure out size of all content based on child Content Dimensions.
+        Vector2 dimensions = this.ContentDimensions();
+        
         // Edge margins
         float windowWidth = dimensions.x + (edgeMargin * 2);
         float windowHeight = dimensions.y + (edgeMargin * 2);
-
 
         // Row margins
         if (content.Count > 1)
@@ -52,24 +47,41 @@ public class ColumnController : LayoutController
             windowHeight += contentMargin * (content.Count - 1);
         }
 
-        // transform.localPosition = new Vector2(0f, 0f);
+        // Set size of resulting layout
         GetComponent<RectTransform>().sizeDelta = new Vector2(windowWidth, windowHeight);
     }
 
+
+    // Going from bottom to top, place one element at a time, then return the next legal element offset
     public override float PositionElements()
-    {   
+    {
         // Place row elements
         float nextElementY = -1 * (GetComponent<RectTransform>().sizeDelta.y / 2) + edgeMargin;
         for (int rowIndex = content.Count - 1; rowIndex >= 0; rowIndex--)
         {
             GameObject row = content[rowIndex];
             float halfElementHeight = row.GetComponent<RectTransform>().rect.height / 2;
+
+            TextBoxController rowTBC = row.GetComponent<TextBoxController>();
+            if(rowTBC != null)
+            {
+                halfElementHeight = rowTBC.GetEffectiveSize().y / 2;
+            }
+
             nextElementY += halfElementHeight;
             row.transform.localPosition = new Vector2(0f, nextElementY);
             nextElementY += halfElementHeight;
 
             // Add either row margin or edge margin depending on if we are at the top element
-            nextElementY += (rowIndex > 0 ? contentMargin : edgeMargin);
+            if(rowIndex == 0)
+            {
+                nextElementY += edgeMargin;
+            }
+            else
+            {
+                nextElementY += contentMargin;
+            }
+            
         }
         return nextElementY;
     }

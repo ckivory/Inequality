@@ -17,14 +17,28 @@ public abstract class LayoutController : MonoBehaviour
     // Float for how much space should be between rows
     public float contentMargin;
 
+
     // Helper to get size of content elements without margins
     public abstract Vector2 ContentDimensions();
 
-    // Determine size and properties of layout
-    public abstract void SetConstraints();
+
+    // Recursively enforce sizing and alignment before arranging elements
+    public virtual void SetConstraints()
+    {
+        foreach (GameObject element in content)
+        {
+            LayoutController elementLC = element.GetComponent<LayoutController>();
+            if (elementLC != null)
+            {
+                elementLC.RepositionElements();
+            }
+        }
+    }
+
 
     // Position elements in reverse order and return last element offset in whichever dimension the layout uses
     public abstract float PositionElements();
+
 
     // Determine constraints for window and then do the work to move everything into place
     public void RepositionElements()
@@ -33,16 +47,17 @@ public abstract class LayoutController : MonoBehaviour
         PositionElements();
     }
 
+
     // Set parent of each child to self and place layout in initial configuration
     public virtual void InitializeLayout()
     {
         foreach (GameObject element in content)
         {
-            LayoutController elemLC = element.GetComponent<LayoutController>();
-            if (elemLC != null)
+            LayoutController elementLC = element.GetComponent<LayoutController>();
+            if (elementLC != null)
             {
-                elemLC.parent = this.gameObject;
-                elemLC.InitializeLayout();
+                elementLC.parent = this.gameObject;
+                elementLC.InitializeLayout();
             }
         }
 
