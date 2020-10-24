@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WindowController : ColumnController
+public class WindowLayout : ColumnLayout
 {
     public Image background;
 

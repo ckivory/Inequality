@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ColumnController : LayoutController
+public class ColumnLayout : LayoutController
 {
     // Get dimensions of content  as if there were no margins
     public override Vector2 ContentDimensions()
@@ -38,17 +38,17 @@ public class ColumnController : LayoutController
         Vector2 dimensions = this.ContentDimensions();
         
         // Edge margins
-        float windowWidth = dimensions.x + (edgeMargin * 2);
-        float windowHeight = dimensions.y + (edgeMargin * 2);
+        float columnWidth = dimensions.x + (edgeMargin * 2);
+        float columnHeight = dimensions.y + (edgeMargin * 2);
 
         // Row margins
         if (content.Count > 1)
         {
-            windowHeight += contentMargin * (content.Count - 1);
+            columnHeight += contentMargin * (content.Count - 1);
         }
 
         // Set size of resulting layout
-        GetComponent<RectTransform>().sizeDelta = new Vector2(windowWidth, windowHeight);
+        GetComponent<RectTransform>().sizeDelta = new Vector2(columnWidth, columnHeight);
     }
 
 

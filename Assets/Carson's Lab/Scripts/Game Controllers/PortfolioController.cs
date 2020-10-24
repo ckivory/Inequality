@@ -10,14 +10,16 @@ public class PortfolioController : MonoBehaviour
     [HideInInspector]
     public GameObject parent;
 
-    public List<WindowController> windows;
+    public List<WindowLayout> windows;
     public List<TabController> tabs;
     public float tabHeight;
 
     public float borderWidth;
 
-    WindowController activeWindow;
+    WindowLayout activeWindow;
 
+
+    // Switch the active window to the one given by windowIndex
     public void SetActiveWindow(int windowIndex)
     {
         if(windowIndex < 0 || windowIndex > windows.Count - 1)
@@ -37,28 +39,29 @@ public class PortfolioController : MonoBehaviour
         activeWindow.transform.SetAsLastSibling();
         tabs[windowIndex].tabFace.GetComponent<Button>().interactable = false;
 
-        foreach (WindowController window in windows)
+        foreach (WindowLayout window in windows)
         {
             window.gameObject.SetActive(false);
         }
         activeWindow.gameObject.SetActive(true);
 
-        
-
         // Move current tab face to front of portfolio's children
         tabs[windowIndex].tabFace.transform.SetAsLastSibling();
     }
 
-    public WindowController GetActiveWindow()
+
+    public WindowLayout GetActiveWindow()
     {
         return activeWindow;
     }
 
+
+    // Set up the windows and tabs for the beginning of the game.
     public void InitializeWindows()
     {
         for(int i = 0; i < windows.Count; i++)
         {
-            WindowController window = windows[i];
+            WindowLayout window = windows[i];
             window.parent = gameObject;
             window.InitializeLayout();
             i++;
@@ -75,6 +78,8 @@ public class PortfolioController : MonoBehaviour
         }
     }
 
+
+    // Keep window and tabs positioned correctly
     public void UpdateMainWindow()
     {
         if(activeWindow != null)
