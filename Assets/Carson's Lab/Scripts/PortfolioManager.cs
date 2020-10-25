@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CanvasManager : MonoBehaviour
+public class PortfolioManager : MonoBehaviour
 {
     public PortfolioController PC;
 
