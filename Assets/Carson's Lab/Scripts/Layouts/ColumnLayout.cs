@@ -73,7 +73,7 @@ public class ColumnLayout : LayoutController
             nextElementY += halfElementHeight;
 
             // Add either row margin or edge margin depending on if we are at the top element
-            if(rowIndex == 0)
+            if(rowIndex <= 0)
             {
                 nextElementY += edgeMargin;
             }

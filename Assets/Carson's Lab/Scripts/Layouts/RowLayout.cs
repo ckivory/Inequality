@@ -72,7 +72,7 @@ public class RowLayout : LayoutController
             nextElementX += halfElementWidth;
 
             // Add either row margin or edge margin depending on if we are at the top element
-            if (colIndex == 0)
+            if (colIndex >= content.Count - 1)
             {
                 nextElementX += edgeMargin;
             }
