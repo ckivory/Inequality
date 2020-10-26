@@ -14,7 +14,12 @@ public class ConstrainedTextBox : TextBoxController
     // Given some boxContent and the current font size, either fit the box to the content or set the text to an ellipsized version of the content
     public override void FormatText()
     {
-        Vector2 boundingSize = new Vector2(Mathf.Min(maxSize.x, containerSize.x), Mathf.Min(maxSize.y, containerSize.y));
+        Vector2 boundingSize = maxSize;
+        if(containerSize != null)
+        {
+            boundingSize = new Vector2(Mathf.Min(maxSize.x, containerSize.x), Mathf.Min(maxSize.y, containerSize.y));
+        }
+        
         // Reach max width before wrapping
         while (boxRect.rect.width < boundingSize.x && LineOverflow())
         {

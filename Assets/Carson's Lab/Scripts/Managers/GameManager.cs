@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 
     public PortfolioController PC;
 
+    public ScoreboardController SC;
+
     void Start()
     {
         if(Instance != null)
@@ -19,13 +21,10 @@ public class GameManager : MonoBehaviour
         PC.InitializePanels();
     }
 
-    public void UpdatePortfolio()
-    {
-        PC.UpdateMainPanel();
-    }
 
     void Update()
     {
-            UpdatePortfolio();   
+        PC.UpdateMainPanel();
+        SC.MoveMarkers();
     }
 }
