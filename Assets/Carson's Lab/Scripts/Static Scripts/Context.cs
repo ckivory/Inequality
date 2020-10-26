@@ -4,6 +4,6 @@ using UnityEngine;
 
 public static class Context
 {
-    static int numGenerations;
-    static int numTurnsPerGen;
+    public static int numGenerations = 3;
+    public static int numTurnsPerGen = 4;
 }

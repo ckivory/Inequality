@@ -23,4 +23,14 @@ public class GameEventHandler : MonoBehaviour
     {
         Debug.Log("Sold stock number " + buttonValue);
     }
+
+    public void AcknowledgeButtonClicked()
+    {
+        GameManager.Instance.popup.gameObject.SetActive(false);
+    }
+
+    public void EndTurnButtonClicked()
+    {
+        GameManager.Instance.NextTurn();
+    }
 }
