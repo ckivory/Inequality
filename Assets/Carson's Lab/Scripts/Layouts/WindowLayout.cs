@@ -35,7 +35,7 @@ public class WindowLayout : ColumnLayout
         // Find constraints of children and set sizeDelta to ContentDimensions + normal margins
         base.SetConstraints();
 
-        Vector2 windowSize = GetComponent<RectTransform>().sizeDelta;
+        Vector2 windowSize = rt.sizeDelta;
         float windowWidth = windowSize.x;
         float windowHeight = windowSize.y;
 
@@ -50,7 +50,7 @@ public class WindowLayout : ColumnLayout
         background.rectTransform.localPosition = new Vector2(0f, 0f);
 
         // Set size of resulting layout
-        GetComponent<RectTransform>().sizeDelta = new Vector2(windowWidth, windowHeight);
+        rt.sizeDelta = new Vector2(windowWidth, windowHeight);
     }
 
 

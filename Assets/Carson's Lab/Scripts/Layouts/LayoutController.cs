@@ -16,8 +16,11 @@ public abstract class LayoutController : MonoBehaviour
 
     // Float for how much space should be between rows
     public float contentMargin;
+    
+    protected RectTransform rt;
 
-
+    public RectTransform RT { get => rt; set => rt = value; }
+    
     // Helper to get size of content elements without margins
     public abstract Vector2 ContentDimensions();
 
@@ -25,6 +28,11 @@ public abstract class LayoutController : MonoBehaviour
     // Recursively enforce sizing and alignment before arranging elements
     public virtual void SetConstraints()
     {
+        if(rt == null)
+        {
+            rt = GetComponent<RectTransform>();
+        }
+
         foreach (GameObject element in content)
         {
             LayoutController elementLC = element.GetComponent<LayoutController>();
@@ -51,6 +59,11 @@ public abstract class LayoutController : MonoBehaviour
     // Set parent of each child to self and place layout in initial configuration
     public virtual void InitializeLayout()
     {
+        if (rt == null)
+        {
+            rt = GetComponent<RectTransform>();
+        }
+
         foreach (GameObject element in content)
         {
             LayoutController elementLC = element.GetComponent<LayoutController>();

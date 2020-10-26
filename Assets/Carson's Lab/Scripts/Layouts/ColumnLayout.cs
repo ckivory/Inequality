@@ -48,7 +48,7 @@ public class ColumnLayout : LayoutController
         }
 
         // Set size of resulting layout
-        GetComponent<RectTransform>().sizeDelta = new Vector2(columnWidth, columnHeight);
+        rt.sizeDelta = new Vector2(columnWidth, columnHeight);
     }
 
 
@@ -56,7 +56,7 @@ public class ColumnLayout : LayoutController
     public override float PositionElements()
     {
         // Place row elements
-        float nextElementY = -1 * (GetComponent<RectTransform>().sizeDelta.y / 2) + edgeMargin;
+        float nextElementY = -1 * (rt.sizeDelta.y / 2) + edgeMargin;
         for (int rowIndex = content.Count - 1; rowIndex >= 0; rowIndex--)
         {
             GameObject row = content[rowIndex];

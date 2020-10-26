@@ -6,40 +6,40 @@ using UnityEngine.UI;
 
 public class PortfolioController : MonoBehaviour
 {
-    // Reference to parent, to be set by the parent
-    [HideInInspector]
-    public GameObject parent;
+    // No need for a parent reference, because the parent should always be the Canvas, which has the GameManager attached to it.
 
-    public List<WindowLayout> windows;
+    public List<PanelLayout> panels;
+    // A single vector that decides how big all panels of the portfolio should be, now and forever
+    public Vector2 panelSize;
+
     public List<TabController> tabs;
     public float tabHeight;
 
     public float borderWidth;
 
-    WindowLayout activeWindow;
-
+    PanelLayout activeWindow;
 
     // Switch the active window to the one given by windowIndex
     public void SetActiveWindow(int windowIndex)
     {
-        if(windowIndex < 0 || windowIndex > windows.Count - 1)
+        if(windowIndex < 0 || windowIndex > panels.Count - 1)
         {
             throw new Exception("Cannot switch to a window that doesn't exist");
         }
 
         if(activeWindow != null)
         {
-            tabs[windows.IndexOf(activeWindow)].tabFace.GetComponent<Button>().interactable = true;
+            tabs[panels.IndexOf(activeWindow)].tabFace.GetComponent<Button>().interactable = true;
 
             // Move most recent tab to front of all borders, but back of main window
-            tabs[windows.IndexOf(activeWindow)].tabFace.transform.SetSiblingIndex(tabs.Count);
+            tabs[panels.IndexOf(activeWindow)].tabFace.transform.SetSiblingIndex(tabs.Count);
         }
 
-        activeWindow = windows[windowIndex];
+        activeWindow = panels[windowIndex];
         activeWindow.transform.SetAsLastSibling();
         tabs[windowIndex].tabFace.GetComponent<Button>().interactable = false;
 
-        foreach (WindowLayout window in windows)
+        foreach (WindowLayout window in panels)
         {
             window.gameObject.SetActive(false);
         }
@@ -59,12 +59,10 @@ public class PortfolioController : MonoBehaviour
     // Set up the windows and tabs for the beginning of the game.
     public void InitializeWindows()
     {
-        for(int i = 0; i < windows.Count; i++)
+        foreach(PanelLayout panel in panels)
         {
-            WindowLayout window = windows[i];
-            window.parent = gameObject;
-            window.InitializeLayout();
-            i++;
+            panel.parent = gameObject;      // Not being called or something? Maybe it was a reference-vs-value error caused by using a local variable to store the panel
+            panel.InitializeLayout();
         }
 
         SetActiveWindow(0);
@@ -95,6 +93,11 @@ public class PortfolioController : MonoBehaviour
             {
                 tab.tabLabel.SetFontSize(tab.tabLabel.preferredFontSize);
             }
+        }
+
+        foreach(PanelLayout panel in panels)
+        {
+            panel.ResizeToFit();
         }
     }
 }
