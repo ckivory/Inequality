@@ -4,12 +4,23 @@ using UnityEngine;
 
 public class GameEventHandler : MonoBehaviour
 {
+    public int buttonValue;
+
     public void TabClicked()
     {
         int tabIndex = gameObject.GetComponent<TabController>().tabIndex;
         GameObject.FindObjectOfType<PortfolioController>().SetActivePanel(tabIndex);
     }
 
-    // This is where I will put the event handlers for the game buttons
+    // buttonValue should represent which stock was bought or sold
+    // Determine whether or not the player is allowed to buy or sell it, and then let them or not
+    public void BuyButtonClicked()
+    {
+        Debug.Log("Bought stock number " + buttonValue);
+    }
 
+    public void SellButtonClicked()
+    {
+        Debug.Log("Sold stock number " + buttonValue);
+    }
 }

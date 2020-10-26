@@ -56,6 +56,14 @@ public abstract class LayoutController : MonoBehaviour
     }
 
 
+    // To help fill the parent
+    public void ScaleToFit(Vector2 scaleVector)
+    {
+        // Simplified for time's sake, but I will probably go back and heavily refactor the timing and scaling of the UI elements
+        transform.localScale = scaleVector;
+    }    
+
+
     // Set parent of each child to self and place layout in initial configuration
     public virtual void InitializeLayout()
     {

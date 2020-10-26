@@ -19,7 +19,6 @@ public class PanelLayout : WindowLayout
         }
         Vector2 targetSize = parentPC.panelSize;
         scaleVector = new Vector2(targetSize.x / rt.sizeDelta.x, targetSize.y / rt.sizeDelta.y);
-        Debug.Log("Scale Vector: " + scaleVector);  // Making sure it doesn't instantly become 1 after the first time running
         background.rectTransform.localPosition = new Vector2(0f, 0f);
 
         // Set size of both window and background image
@@ -56,6 +55,18 @@ public class PanelLayout : WindowLayout
 
             nextElementY += halfElementHeight;
             row.transform.localPosition = new Vector2(0f, nextElementY);
+
+            // Re-scale each element to fill the panel
+            LayoutController rowLC = row.GetComponent<LayoutController>();
+            if (rowLC != null)
+            {
+                rowLC.ScaleToFit(scaleVector);
+            }
+            else
+            {
+                row.transform.localScale = scaleVector;
+            }
+
             nextElementY += halfElementHeight;
 
             // Add either row margin or edge margin depending on if we are at the top element
