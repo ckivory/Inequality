@@ -40,18 +40,18 @@ public class TabController : MonoBehaviour
     {
         if(numTabs > 0)
         {
-            float windowWidth = PC.GetActiveWindow().RT.rect.width;
+            float windowWidth = PC.panelSize.x;
             float tabWidth = (windowWidth * 1f / numTabs);
 
             Vector2 tabSize = new Vector2(tabWidth, PC.tabHeight);
             tabBorder.rectTransform.sizeDelta = tabSize;
             // GetComponent<RectTransform>().sizeDelta = tabBorder.rectTransform.sizeDelta;
 
-            Image windowImage = PC.GetActiveWindow().background;
+            Image windowImage = PC.GetActivePanel().background;
             neckHeight = (float)windowImage.sprite.border[3] / windowImage.pixelsPerUnitMultiplier;   // Size of top border of window image
             Vector2 tabPosition = new Vector2(
                 (-1 * windowWidth / 2) + tabWidth * (0.5f + tabIndex),
-                PC.GetActiveWindow().RT.rect.height / 2 + tabSize.y / 2 - neckHeight / 2
+                PC.panelSize.y / 2 + tabSize.y / 2 - neckHeight / 2
                 );
 
             tabBorder.transform.localPosition = new Vector2(tabPosition.x, tabPosition.y);

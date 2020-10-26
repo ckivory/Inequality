@@ -16,12 +16,12 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
-        PC.InitializeWindows();
+        PC.InitializePanels();
     }
 
     public void UpdatePortfolio()
     {
-        PC.UpdateMainWindow();
+        PC.UpdateMainPanel();
     }
 
     void Update()

@@ -17,47 +17,47 @@ public class PortfolioController : MonoBehaviour
 
     public float borderWidth;
 
-    PanelLayout activeWindow;
+    PanelLayout activePanel;
 
     // Switch the active window to the one given by windowIndex
-    public void SetActiveWindow(int windowIndex)
+    public void SetActivePanel(int panelIndex)
     {
-        if(windowIndex < 0 || windowIndex > panels.Count - 1)
+        if(panelIndex < 0 || panelIndex > panels.Count - 1)
         {
             throw new Exception("Cannot switch to a window that doesn't exist");
         }
 
-        if(activeWindow != null)
+        if(activePanel != null)
         {
-            tabs[panels.IndexOf(activeWindow)].tabFace.GetComponent<Button>().interactable = true;
+            tabs[panels.IndexOf(activePanel)].tabFace.GetComponent<Button>().interactable = true;
 
             // Move most recent tab to front of all borders, but back of main window
-            tabs[panels.IndexOf(activeWindow)].tabFace.transform.SetSiblingIndex(tabs.Count);
+            tabs[panels.IndexOf(activePanel)].tabFace.transform.SetSiblingIndex(tabs.Count);
         }
 
-        activeWindow = panels[windowIndex];
-        activeWindow.transform.SetAsLastSibling();
-        tabs[windowIndex].tabFace.GetComponent<Button>().interactable = false;
+        activePanel = panels[panelIndex];
+        activePanel.transform.SetAsLastSibling();
+        tabs[panelIndex].tabFace.GetComponent<Button>().interactable = false;
 
-        foreach (WindowLayout window in panels)
+        foreach (PanelLayout panel in panels)
         {
-            window.gameObject.SetActive(false);
+            panel.gameObject.SetActive(false);
         }
-        activeWindow.gameObject.SetActive(true);
+        activePanel.gameObject.SetActive(true);
 
         // Move current tab face to front of portfolio's children
-        tabs[windowIndex].tabFace.transform.SetAsLastSibling();
+        tabs[panelIndex].tabFace.transform.SetAsLastSibling();
     }
 
 
-    public WindowLayout GetActiveWindow()
+    public PanelLayout GetActivePanel()
     {
-        return activeWindow;
+        return activePanel;
     }
 
 
     // Set up the windows and tabs for the beginning of the game.
-    public void InitializeWindows()
+    public void InitializePanels()
     {
         foreach(PanelLayout panel in panels)
         {
@@ -65,7 +65,7 @@ public class PortfolioController : MonoBehaviour
             panel.InitializeLayout();
         }
 
-        SetActiveWindow(0);
+        SetActivePanel(0);
 
         for(int i = 0; i < tabs.Count; i++)
         {
@@ -78,11 +78,11 @@ public class PortfolioController : MonoBehaviour
 
 
     // Keep window and tabs positioned correctly
-    public void UpdateMainWindow()
+    public void UpdateMainPanel()
     {
-        if(activeWindow != null)
+        if(activePanel != null)
         {
-            activeWindow.RepositionElements();
+            activePanel.RepositionElements();
         }
 
         foreach(TabController tab in tabs)
@@ -93,11 +93,6 @@ public class PortfolioController : MonoBehaviour
             {
                 tab.tabLabel.SetFontSize(tab.tabLabel.preferredFontSize);
             }
-        }
-
-        foreach(PanelLayout panel in panels)
-        {
-            panel.ResizeToFit();
         }
     }
 }
