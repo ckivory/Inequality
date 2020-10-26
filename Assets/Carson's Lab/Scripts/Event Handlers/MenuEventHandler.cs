@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ButtonEventHandler : MonoBehaviour
+public class MenuEventHandler : MonoBehaviour
 {
     public void StartButtonPushed()
     {
@@ -26,7 +26,7 @@ public class ButtonEventHandler : MonoBehaviour
         #endif
     }
 
-    public void MenuButtonClicked()
+    public void MenuButtonPushed()
     {
         SceneManager.LoadScene("Main Menu");
     }

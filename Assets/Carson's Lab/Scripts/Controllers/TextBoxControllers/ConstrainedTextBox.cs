@@ -3,47 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TextBoxController : MonoBehaviour
+public class ConstrainedTextBox : TextBoxController
 {
+    public bool shrinkFontOnOverflow;
+
     public Vector2 maxSize;
     [HideInInspector]
     public Vector2 containerSize;
 
-    public bool shrinkFontOnOverflow;
-
-    public int preferredFontSize;
-
-    protected Text textComp;
-    protected RectTransform boxRect;
-
-    protected string boxContent;
-
-    public Vector2 GetEffectiveSize()
-    {
-        float textWidth = 0;
-        float textHeight = 0;
-
-        if(boxRect != null)
-        {
-            textWidth = Mathf.Min(boxRect.rect.width, textComp.preferredWidth);
-            textHeight = Mathf.Min(boxRect.rect.height, textComp.GetComponent<Text>().preferredHeight);
-        }
-        return new Vector2(textWidth, textHeight);
-    }
-
-    protected bool LineOverflow()
-    {
-        return textComp.preferredWidth > boxRect.rect.width;
-        // Maybe boundingSize.x?
-    }
-
-    protected bool BoxOverflow()
-    {
-        return textComp.preferredHeight > boxRect.rect.height;
-    }
-
     // Given some boxContent and the current font size, either fit the box to the content or set the text to an ellipsized version of the content
-    public void FormatText()
+    public override void FormatText()
     {
         Vector2 boundingSize = new Vector2(Mathf.Min(maxSize.x, containerSize.x), Mathf.Min(maxSize.y, containerSize.y));
         // Reach max width before wrapping
@@ -81,27 +50,25 @@ public class TextBoxController : MonoBehaviour
         }
     }
 
-    public void SetText(string newText)
+    public override void SetText(string newText)
     {
         boxContent = newText;
         textComp.text = boxContent;
         FormatText();
     }
 
-    public void SetFontSize(int newFontSize)
-    {
-        if (newFontSize > 0)
-        {
-            textComp.fontSize = newFontSize;
-        }
-        FormatText();
-    }
-
-    public void InitializeTextBox()
+    public override void InitializeTextBox()
     {
         textComp = GetComponent<Text>();
         boxRect = GetComponent<RectTransform>();
         boxContent = textComp.text;
+
+        textComp.alignment = TextAnchor.MiddleCenter;
+
+        if (preferredFontSize == 0)
+        {
+            preferredFontSize = textComp.fontSize;
+        }
 
         if (maxSize == Vector2.zero)
         {
@@ -109,16 +76,6 @@ public class TextBoxController : MonoBehaviour
         }
         containerSize = maxSize;
 
-        if (preferredFontSize == 0)
-        {
-            preferredFontSize = textComp.fontSize;
-        }
-
         FormatText();
-    }
-
-    void Start()
-    {
-        InitializeTextBox();
     }
 }

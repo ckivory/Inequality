@@ -8,7 +8,7 @@ public class WindowLayout : ColumnLayout
     public Image background;
 
     // Optional
-    public TextBoxController Title;
+    public ConstrainedTextBox Title;
 
 
     // Get dimensions of content and title

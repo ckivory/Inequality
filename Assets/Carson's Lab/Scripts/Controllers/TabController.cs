@@ -15,7 +15,7 @@ public class TabController : MonoBehaviour
     public Image tabBorder;
     public Image tabFace;
 
-    public TextBoxController tabLabel;
+    public ConstrainedTextBox tabLabel;
 
     private int numTabs = -1;
     [HideInInspector]

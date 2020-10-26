@@ -490,11 +490,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6327683178261365074, guid: a595a04a289554a4aa135b4874c244a4, type: 3}
   m_PrefabInstance: {fileID: 1181805221}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1181805223 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6327683179034795344, guid: a595a04a289554a4aa135b4874c244a4, type: 3}
-  m_PrefabInstance: {fileID: 1181805221}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1258885662
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,14 +583,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 0}
-  background: {fileID: 0}
-  Title: {fileID: 467299919}
-  rows:
-  - {fileID: 1181805223}
-  - {fileID: 2041886537}
-  - {fileID: 707622444798226820}
+  content: []
   edgeMargin: 30
-  rowMargin: 30
+  contentMargin: 0
+  background: {fileID: 0}
+  Title: {fileID: 0}
 --- !u!1 &1608006314
 GameObject:
   m_ObjectHideFlags: 0
@@ -768,11 +760,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6327683178261365074, guid: a595a04a289554a4aa135b4874c244a4, type: 3}
   m_PrefabInstance: {fileID: 2041886535}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2041886537 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6327683179034795344, guid: a595a04a289554a4aa135b4874c244a4, type: 3}
-  m_PrefabInstance: {fileID: 2041886535}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &707622444798226819
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -868,13 +855,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5953925456877221290, guid: 73efbb4d8c3a6594883c3c910471659c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MenuEventHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953925456877221290, guid: 73efbb4d8c3a6594883c3c910471659c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MenuButtonPushed
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73efbb4d8c3a6594883c3c910471659c, type: 3}
---- !u!1 &707622444798226820 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5953925456877221287, guid: 73efbb4d8c3a6594883c3c910471659c, type: 3}
-  m_PrefabInstance: {fileID: 707622444798226819}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6589168079854945323 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5953925456877221288, guid: 73efbb4d8c3a6594883c3c910471659c, type: 3}
