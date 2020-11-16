@@ -9,12 +9,12 @@ EditorBuildSettings:
     path: Assets/Public/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Carson's Lab/Scenes/Main Menu.unity
+    path: Assets/Carson's Lab/Bet 1/Scenes/Main Menu.unity
     guid: c682b91a527b3dc4c981899596a2344f
   - enabled: 1
-    path: Assets/Carson's Lab/Scenes/Portfolio.unity
+    path: Assets/Carson's Lab/Bet 1/Scenes/Portfolio.unity
     guid: d95883c2c3f411a4aa97a8e608af8f37
   - enabled: 1
-    path: Assets/Carson's Lab/Scenes/Game Setup.unity
+    path: Assets/Carson's Lab/Bet 1/Scenes/Game Setup.unity
     guid: cf62262ffba13794d959a443fab618f4
   m_configObjects: {}
