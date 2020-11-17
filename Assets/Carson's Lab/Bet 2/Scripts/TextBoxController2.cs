@@ -21,7 +21,7 @@ public class TextBoxController2 : MonoBehaviour
     {
         string displayText = text;
 
-        while (textComp.preferredHeight > size.y)
+        while (textComp.preferredHeight > size.y && displayText.Length > 0)
         {
             displayText = displayText.Substring(0, displayText.Length - 1);
             textComp.text = displayText + "...";
@@ -56,7 +56,7 @@ public class TextBoxController2 : MonoBehaviour
         textComp.fontSize = preferredFontSize;
         textComp.alignment = TextAnchor.MiddleCenter;
         textComp.GetComponent<RectTransform>().sizeDelta = size;
-        textComp.GetComponent<RectTransform>().localPosition = new Vector2(0f, 0f);
+        textComp.GetComponent<RectTransform>().localPosition = Vector2.zero;
 
         ConstrainText();
     }

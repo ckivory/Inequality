@@ -12,7 +12,7 @@ public class WindowLayout2 : ColumnLayout2
         this.size = newSize;
         this.pos = newPos;
         background.GetComponent<RectTransform>().sizeDelta = size;
-        background.transform.localPosition = new Vector2(0f, 0f);
+        background.transform.localPosition = Vector2.zero;
 
         base.PositionElements(this.size, this.pos);
     }

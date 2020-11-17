@@ -115,8 +115,8 @@ public class GameManager2 : MonoBehaviour
         Instance = this;
         Rect canvasRect = gameObject.GetComponent<RectTransform>().rect;
 
-        PC.activeWindow = 0;
-        container.PositionElements(new Vector2(canvasRect.width, canvasRect.height), new Vector2(0f, 0f));
+        PC.SetWindow(0);
+        container.PositionElements(new Vector2(canvasRect.width, canvasRect.height), Vector2.zero);
 
 
         // StartGame();
