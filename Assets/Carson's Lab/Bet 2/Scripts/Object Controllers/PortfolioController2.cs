@@ -43,14 +43,6 @@ public class PortfolioController2 : LayoutController2
             if (windowIndex == activeWindow)
             {
                 window.gameObject.SetActive(true);
-                
-                /*
-                Debug.Log("Portfolio height: " + this.size.y);
-                Debug.Log("Tab height: " + this.tabHeight);
-                Debug.Log("Window Height: " + windowHeight);
-                Debug.Log("Window Y: " + windowY);
-                */
-
                 window.PositionElements(new Vector2(size.x, windowHeight), new Vector2(0f, windowY));
                 
             }

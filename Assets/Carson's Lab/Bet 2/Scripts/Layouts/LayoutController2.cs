@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -39,6 +40,11 @@ public abstract class LayoutController2 : MonoBehaviour
     // Position elements in reverse order and return last element offset in whichever dimension the layout uses
     public virtual void PositionElements(Vector2 newSize, Vector2 newPos)
     {
+        if(content.Count != relativeSizes.Count)
+        {
+            throw new Exception("Must set the relative size of every element in the layout.");
+        }
+
         this.size = newSize;
         this.pos = newPos;
 

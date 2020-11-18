@@ -17,6 +17,11 @@ public class ColumnLayout2 : LayoutController2
         {
             GameObject element = content[elementIndex];
 
+            if (gameObject.name == "Column 2")
+            {
+                Debug.Log("Positioning " + element.name);
+            }
+
             Vector2 elementSize = new Vector2(contentRealEstate.x, contentRealEstate.y * sizeFraction(elementIndex));
             nextElementY -= elementSize.y / 2;
 
@@ -31,6 +36,11 @@ public class ColumnLayout2 : LayoutController2
                 TB.size = elementSize;
                 TB.pos = new Vector2(0f, nextElementY);
                 TB.FormatText();
+            }
+            else
+            {
+                element.GetComponent<RectTransform>().sizeDelta = elementSize;
+                element.transform.localPosition = new Vector2(0f, nextElementY);
             }
 
             nextElementY -= elementSize.y / 2;
