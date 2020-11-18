@@ -115,7 +115,6 @@ public class GameManager2 : MonoBehaviour
         Instance = this;
         Rect canvasRect = gameObject.GetComponent<RectTransform>().rect;
 
-        PC.SetWindow(0);
         container.PositionElements(new Vector2(canvasRect.width, canvasRect.height), Vector2.zero);
 
 
@@ -125,7 +124,11 @@ public class GameManager2 : MonoBehaviour
 
     void Update()
     {
-        // PC.UpdateMainPanel();
+        Rect canvasRect = gameObject.GetComponent<RectTransform>().rect;
+        if (container.size != canvasRect.size)
+        {
+            container.PositionElements(new Vector2(canvasRect.width, canvasRect.height), Vector2.zero);
+        }
         // SC.MoveMarkers();
     }
 }

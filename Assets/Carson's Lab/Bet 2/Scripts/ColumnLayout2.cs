@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class ColumnLayout2 : LayoutController2
 {
-    public override void PositionElements(Vector2 newSize, Vector2 newPos)
+    public override void RepositionElements()
     {
-        this.size = newSize;
-        this.pos = newPos;
         this.GetComponent<RectTransform>().sizeDelta = size;
         this.transform.localPosition = pos;
 
@@ -28,7 +26,7 @@ public class ColumnLayout2 : LayoutController2
             {
                 LC.PositionElements(elementSize, new Vector2(0f, nextElementY));
             }
-            else if(TB != null)
+            else if (TB != null)
             {
                 TB.size = elementSize;
                 TB.pos = new Vector2(0f, nextElementY);

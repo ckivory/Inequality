@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class RowLayout2 : LayoutController2
 {
-    public override void PositionElements(Vector2 newSize, Vector2 newPos)
+    public override void RepositionElements()
     {
-        size = newSize;
-        pos = newPos;
-
         this.GetComponent<RectTransform>().sizeDelta = size;
         this.transform.localPosition = pos;
 

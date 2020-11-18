@@ -34,6 +34,14 @@ public abstract class LayoutController2 : MonoBehaviour
         return (float)relativeSizes[elementIndex] / totalSize;
     }
 
+    public abstract void RepositionElements();
+
     // Position elements in reverse order and return last element offset in whichever dimension the layout uses
-    public abstract void PositionElements(Vector2 size, Vector2 pos);
+    public virtual void PositionElements(Vector2 newSize, Vector2 newPos)
+    {
+        this.size = newSize;
+        this.pos = newPos;
+
+        this.RepositionElements();
+    }
 }
