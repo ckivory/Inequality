@@ -42,15 +42,11 @@ public class TextBoxController2 : ElementController
 
     public override void UpdateElement()
     {
-        GetComponent<RectTransform>().sizeDelta = size;
-        transform.localPosition = pos;
-
         textComp = GetComponent<Text>();
         textComp.text = text;
         textComp.fontSize = preferredFontSize;
         textComp.alignment = TextAnchor.MiddleCenter;
-        textComp.GetComponent<RectTransform>().sizeDelta = size;
-        textComp.GetComponent<RectTransform>().localPosition = Vector2.zero;
+        
 
         ConstrainText();
     }

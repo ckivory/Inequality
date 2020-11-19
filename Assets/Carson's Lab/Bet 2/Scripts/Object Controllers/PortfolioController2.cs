@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PortfolioController2 : LayoutController2
+public class PortfolioController2 : ElementController
 {
     public List<TabController2> tabs;
     public List<WindowLayout2> windows;
@@ -81,9 +81,6 @@ public class PortfolioController2 : LayoutController2
 
     public override void UpdateElement()
     {
-        GetComponent<RectTransform>().sizeDelta = size;
-        transform.localPosition = pos;
-
         if(activeWindow == -1)
         {
             activeWindow = 0;

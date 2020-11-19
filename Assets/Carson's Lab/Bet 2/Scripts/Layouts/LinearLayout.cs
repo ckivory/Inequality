@@ -51,21 +51,11 @@ public abstract class LinearLayout : LayoutController2
             Vector2 elementSize = ElementSize(elementIndex);
             nextElementPos = CenterElement(nextElementPos, elementSize);
 
-            LayoutController2 LC = element.GetComponent<LayoutController2>();
-            TextBoxController2 TB = element.GetComponent<TextBoxController2>();
-            ButtonController BC = element.GetComponent<ButtonController>();
+            ElementController EC = element.GetComponent<ElementController>();
 
-            if (LC != null)
+            if(EC != null)
             {
-                LC.PlaceElement(elementSize, nextElementPos);
-            }
-            else if (TB != null)
-            {
-                TB.PlaceElement(elementSize, nextElementPos);
-            }
-            else if (BC != null)
-            {
-                BC.PlaceElement(elementSize, nextElementPos);
+                EC.PlaceElement(elementSize, nextElementPos);
             }
             else
             {

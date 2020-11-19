@@ -23,7 +23,7 @@ public class ButtonController : ElementController
         // Update text box if it exists
         try
         {
-            textBox.PlaceElement(this.size, this.pos);
+            textBox.PlaceElement(this.size, new Vector2(0f, 0f));
         }
         catch (Exception)
         {
