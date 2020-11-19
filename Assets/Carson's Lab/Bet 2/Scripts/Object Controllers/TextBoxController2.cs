@@ -3,19 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TextBoxController2 : MonoBehaviour
+public class TextBoxController2 : ElementController
 {
-    [HideInInspector]
-    public Vector2 size;
-    [HideInInspector]
-    public Vector2 pos;
-
     public string text;
     public int preferredFontSize;
     public int minFontSize;
 
     private Text textComp;
-
 
     public void EllipsizeText()
     {
@@ -46,7 +40,7 @@ public class TextBoxController2 : MonoBehaviour
     }
 
 
-    public void FormatText()
+    public override void UpdateElement()
     {
         GetComponent<RectTransform>().sizeDelta = size;
         transform.localPosition = pos;
@@ -59,13 +53,5 @@ public class TextBoxController2 : MonoBehaviour
         textComp.GetComponent<RectTransform>().localPosition = Vector2.zero;
 
         ConstrainText();
-    }
-
-    public void PositionText(Vector2 newSize, Vector2 newPos)
-    {
-        this.size = newSize;
-        this.pos = newPos;
-
-        FormatText();
     }
 }

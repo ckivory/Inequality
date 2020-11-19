@@ -2,48 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RowLayout2 : LayoutController2
+public class RowLayout2 : LinearLayout
 {
-    public override void RepositionElements()
+    public override Vector2 ContentRealEstate()
     {
-        this.GetComponent<RectTransform>().sizeDelta = size;
-        this.transform.localPosition = pos;
-
         int numContentMargins = content.Count - 1;
-        Vector2 contentRealEstate = new Vector2(this.size.x - (this.edgeMargin * 2) - (this.contentMargin * numContentMargins), this.size.y - (this.edgeMargin * 2));
+        return new Vector2(this.size.x - (this.edgeMargin * 2) - (this.contentMargin * numContentMargins), this.size.y - (this.edgeMargin * 2));
+    }
 
-        float nextElementX = (-1 * this.size.x / 2) + this.edgeMargin;
-        for (int elementIndex = 0; elementIndex < content.Count; elementIndex++)
-        {
-            GameObject element = content[elementIndex];
 
-            Vector2 elementSize = new Vector2(contentRealEstate.x * sizeFraction(elementIndex), contentRealEstate.y);
-            nextElementX += elementSize.x / 2;
+    public override Vector2 ElementSize(int elementIndex)
+    {
+        Vector2 realEstate = ContentRealEstate();
+        return new Vector2(realEstate.x * sizeFraction(elementIndex), realEstate.y);
+    }
 
-            LayoutController2 LC = element.GetComponent<LayoutController2>();
-            TextBoxController2 TB = element.GetComponent<TextBoxController2>();
-            ButtonController BC = element.GetComponent<ButtonController>();
 
-            if (LC != null)
-            {
-                LC.PositionElements(elementSize, new Vector2(nextElementX, 0f));
-            }
-            else if (TB != null)
-            {
-                TB.PositionText(elementSize, new Vector2(nextElementX, 0f));
-            }
-            else if(BC != null)
-            {
-                BC.SetupButton(elementSize, new Vector2(nextElementX, 0f));
-            }
-            else
-            {
-                element.GetComponent<RectTransform>().sizeDelta = elementSize;
-                element.transform.localPosition = new Vector2(nextElementX, 0f);
-            }
+    public override Vector2 FirstElementPos()
+    {
+        return new Vector2((-1 * this.size.x / 2) + this.edgeMargin, 0f);
+    }
 
-            nextElementX += elementSize.x / 2;
-            nextElementX += this.contentMargin;
-        }
+
+    public override Vector2 CenterElement(Vector2 lastPos, Vector2 elementSize)
+    {
+        return new Vector2(lastPos.x + (elementSize.x / 2), lastPos.y);
+    }
+
+
+    public override Vector2 NextElementStart(Vector2 lastPos, Vector2 elementSize)
+    {
+        return new Vector2(lastPos.x + (elementSize.x / 2) + this.contentMargin, lastPos.y);
     }
 }

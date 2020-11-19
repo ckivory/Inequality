@@ -7,11 +7,11 @@ public class WindowLayout2 : ColumnLayout2
 {
     public Image background;
 
-    public override void RepositionElements()
+    public override void UpdateElement()
     {
         background.GetComponent<RectTransform>().sizeDelta = size;
         background.transform.localPosition = Vector2.zero;
 
-        base.RepositionElements();
+        base.UpdateElement();
     }
 }

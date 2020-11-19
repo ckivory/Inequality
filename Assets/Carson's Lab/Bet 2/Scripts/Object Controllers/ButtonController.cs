@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ButtonController : MonoBehaviour
+public class ButtonController : ElementController
 {
     public TextBoxController2 textBox;
 
@@ -17,11 +18,16 @@ public class ButtonController : MonoBehaviour
         Debug.Log("Sell!");
     }
 
-    public void SetupButton(Vector2 newSize, Vector2 newPos)
+    public override void UpdateElement()
     {
-        this.GetComponent<RectTransform>().sizeDelta = newSize;
-        this.transform.localPosition = newPos;
-
-
+        // Update text box if it exists
+        try
+        {
+            textBox.PlaceElement(this.size, this.pos);
+        }
+        catch (Exception)
+        {
+            // Debug.Log("No text box");
+        }
     }
 }

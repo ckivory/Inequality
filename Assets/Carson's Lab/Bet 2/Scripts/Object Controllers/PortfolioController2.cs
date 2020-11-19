@@ -18,7 +18,7 @@ public class PortfolioController2 : LayoutController2
     public void SetWindow(int newActiveWindow)
     {
         activeWindow = newActiveWindow;
-        RepositionElements();
+        UpdateElement();
     }
 
     public float RealTabHeight()
@@ -43,7 +43,7 @@ public class PortfolioController2 : LayoutController2
             if (windowIndex == activeWindow)
             {
                 window.gameObject.SetActive(true);
-                window.PositionElements(new Vector2(size.x, windowHeight), new Vector2(0f, windowY));
+                window.PlaceElement(new Vector2(size.x, windowHeight), new Vector2(0f, windowY));
                 
             }
             else
@@ -79,7 +79,7 @@ public class PortfolioController2 : LayoutController2
         }
     }
 
-    public override void RepositionElements()
+    public override void UpdateElement()
     {
         GetComponent<RectTransform>().sizeDelta = size;
         transform.localPosition = pos;

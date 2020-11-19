@@ -17,7 +17,7 @@ public class TabController2 : MonoBehaviour
     {
         int tabIndex = PC.tabs.IndexOf(this);
         PC.SetWindow(tabIndex);
-        PC.RepositionElements();
+        PC.UpdateElement();
     }
 
     public float NeckHeight()

@@ -115,7 +115,7 @@ public class GameManager2 : MonoBehaviour
         Instance = this;
         Rect canvasRect = gameObject.GetComponent<RectTransform>().rect;
 
-        container.PositionElements(new Vector2(canvasRect.width, canvasRect.height), Vector2.zero);
+        container.PlaceElement(new Vector2(canvasRect.width, canvasRect.height), Vector2.zero);
 
 
         // StartGame();
@@ -127,7 +127,7 @@ public class GameManager2 : MonoBehaviour
         Rect canvasRect = gameObject.GetComponent<RectTransform>().rect;
         if (container.size != canvasRect.size)
         {
-            container.PositionElements(new Vector2(canvasRect.width, canvasRect.height), Vector2.zero);
+            container.PlaceElement(new Vector2(canvasRect.width, canvasRect.height), Vector2.zero);
         }
         // SC.MoveMarkers();
     }
