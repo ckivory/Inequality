@@ -5,10 +5,6 @@ using UnityEngine;
 
 public abstract class LayoutController2 : MonoBehaviour
 {
-    // Reference to the parent, to be set by the parent on initialization
-    [HideInInspector]
-    public GameObject parent;
-
     [HideInInspector]
     public Vector2 size;
     [HideInInspector]

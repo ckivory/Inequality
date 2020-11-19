@@ -60,4 +60,12 @@ public class TextBoxController2 : MonoBehaviour
 
         ConstrainText();
     }
+
+    public void PositionText(Vector2 newSize, Vector2 newPos)
+    {
+        this.size = newSize;
+        this.pos = newPos;
+
+        FormatText();
+    }
 }

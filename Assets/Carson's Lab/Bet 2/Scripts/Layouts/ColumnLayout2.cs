@@ -17,25 +17,24 @@ public class ColumnLayout2 : LayoutController2
         {
             GameObject element = content[elementIndex];
 
-            if (gameObject.name == "Column 2")
-            {
-                Debug.Log("Positioning " + element.name);
-            }
-
             Vector2 elementSize = new Vector2(contentRealEstate.x, contentRealEstate.y * sizeFraction(elementIndex));
             nextElementY -= elementSize.y / 2;
 
             LayoutController2 LC = element.GetComponent<LayoutController2>();
             TextBoxController2 TB = element.GetComponent<TextBoxController2>();
+            ButtonController BC = element.GetComponent<ButtonController>();
+
             if (LC != null)
             {
                 LC.PositionElements(elementSize, new Vector2(0f, nextElementY));
             }
             else if (TB != null)
             {
-                TB.size = elementSize;
-                TB.pos = new Vector2(0f, nextElementY);
-                TB.FormatText();
+                TB.PositionText(elementSize, new Vector2(0f, nextElementY));
+            }
+            else if (BC != null)
+            {
+                BC.SetupButton(elementSize, new Vector2(0f, nextElementY));
             }
             else
             {

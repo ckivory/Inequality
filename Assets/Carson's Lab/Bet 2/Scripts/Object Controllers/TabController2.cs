@@ -12,6 +12,13 @@ public class TabController2 : MonoBehaviour
     [HideInInspector]
     public PortfolioController2 PC;
 
+    // Called by clicking the tab face
+    public void SwitchTabs()
+    {
+        int tabIndex = PC.tabs.IndexOf(this);
+        PC.SetWindow(tabIndex);
+        PC.RepositionElements();
+    }
 
     public float NeckHeight()
     {
