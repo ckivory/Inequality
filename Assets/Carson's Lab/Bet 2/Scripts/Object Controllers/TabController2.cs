@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,6 +9,7 @@ public class TabController2 : MonoBehaviour
 {
     public Image face;
     public Image border;
+    public TextBoxController2 textBox;
 
     [HideInInspector]
     public PortfolioController2 PC;
@@ -68,5 +70,17 @@ public class TabController2 : MonoBehaviour
 
         // Set button to be clickable if it is not in the foreground currently
         face.GetComponent<Button>().interactable = !inFront;
+
+        try
+        {
+            Rect tabRect = GetComponent<RectTransform>().rect;
+            float tabBorderSize = face.sprite.border[0] / face.pixelsPerUnitMultiplier;
+            Vector2 visibleSize = new Vector2(tabRect.width - (tabBorderSize * 2), tabRect.height - NeckHeight());
+            textBox.PlaceElement(visibleSize, new Vector2(0f, NeckHeight() / 2));
+        }
+        catch (Exception)
+        {
+            throw new Exception("All tabs must have a label.");
+        }
     }
 }

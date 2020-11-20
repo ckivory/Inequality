@@ -9,6 +9,8 @@ public class TextBoxController2 : ElementController
     public int preferredFontSize;
     public int minFontSize;
 
+    public TextAnchor alignment = TextAnchor.MiddleCenter;
+
     private Text textComp;
 
     public void EllipsizeText()
@@ -45,8 +47,7 @@ public class TextBoxController2 : ElementController
         textComp = GetComponent<Text>();
         textComp.text = text;
         textComp.fontSize = preferredFontSize;
-        textComp.alignment = TextAnchor.MiddleCenter;
-        
+        textComp.alignment = alignment;
 
         ConstrainText();
     }

@@ -23,6 +23,7 @@ public class ButtonController : ElementController
         // Update text box if it exists
         try
         {
+            textBox.alignment = TextAnchor.MiddleCenter;
             textBox.PlaceElement(this.size, new Vector2(0f, 0f));
         }
         catch (Exception)
