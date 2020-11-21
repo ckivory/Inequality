@@ -13,6 +13,12 @@ public class TextBoxController2 : ElementController
 
     private Text textComp;
 
+    public void SetText(string newText)
+    {
+        text = newText;
+        UpdateElement();
+    }
+
     public void EllipsizeText()
     {
         string displayText = text;

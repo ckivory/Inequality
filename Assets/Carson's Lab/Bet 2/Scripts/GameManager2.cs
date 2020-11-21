@@ -9,101 +9,149 @@ public class GameManager2 : MonoBehaviour
     public static GameManager2 Instance;
 
     public LayoutController2 container;
+    public ColumnLayout2 popupContainer;
+    public PopUpController2 popup;
 
-    public PortfolioController2 PC;
+    public ButtonController EndTurnButton;
 
-    /*
-    public ScoreboardController SC;
+    public List<PlayerController2> players;
 
-    public PopUpController popup;
+    public List<float> classChances;
 
-    public List<PlayerController> players;
+    public List<float> lowEducationChances;
+    public List<float> medEducationChances;
+    public List<float> highEducationChances;
 
-    public List<float> initialClassProbabilities;
+    public List<int> incomeLevels;
 
-    public List<int> startingWealthOptions;
+    private int turnNum = 0;
+    private int roundNum = 0;
+    private int generationNum = 0;
 
-    public Text currentPlayerLabel;
-    public Text turnCounter;
-    public Text genCounter;
-
-    private int playerNumber;
-    private int turnsLeftInGen;
-    private int generationsLeft;
-    
-
-    public int ProbDistribution(List<float> probabilities)
+    public void ClosePopup()
     {
-        float rand = Random.value;
-        float chanceSoFar = 0f;
+        popupContainer.gameObject.SetActive(false);
+        EndTurnButton.SetInteractible(true);
+    }
 
-        for (int i = 0; i < probabilities.Count; i++)
+    public void OpenPopup()
+    {
+        popupContainer.gameObject.SetActive(true);
+        EndTurnButton.SetInteractible(false);
+    }
+
+    private PlayerController2 GetPlayer(int playerNumber)
+    {
+        return players[playerNumber - 1];
+    }
+
+    public int ChooseRandom(List<float> chances)
+    {
+        float roll = Random.value;
+        for (int choiceIndex = 0; choiceIndex < chances.Count; choiceIndex++)
         {
-            chanceSoFar += probabilities[i];
-            if (chanceSoFar >= rand)
+            Debug.Log(chances[choiceIndex]);
+
+            roll -= chances[choiceIndex];
+            if (roll <= 0)
             {
-                return i;
+                return choiceIndex;
             }
         }
-        return probabilities.Count - 1;
+        return chances.Count - 1;
     }
-    
+
+    public void IncomePopup()
+    {
+        PlayerController2 player = GetPlayer(turnNum);
+        player.AddWealth(incomeLevels[player.GetEducation()]);
+        popup.title.SetText("You collect your income of: " + incomeLevels[player.GetEducation()] + "\nFor a total of: " + player.GetWealth());
+        popup.button.textBox.SetText("Collect Income");
+        popup.button.SetListener(ClosePopup);
+        OpenPopup();
+    }
+
+    public void EducationPopup()
+    {
+        PlayerController2 player = GetPlayer(turnNum);
+        if(player.GetClass() == 0)
+        {
+            player.SetEducation(ChooseRandom(lowEducationChances));
+        }
+        else if(player.GetClass() == 1)
+        {
+            player.SetEducation(ChooseRandom(medEducationChances));
+        }
+        else
+        {
+            player.SetEducation(ChooseRandom(highEducationChances));
+        }
+
+        popup.title.SetText("You receive a " + player.namedEducation() + " education\nAnd will have an income of " + incomeLevels[player.GetEducation()]);
+        popup.button.textBox.SetText("Collect Income");
+        popup.button.SetListener(IncomePopup);
+        OpenPopup();
+    }
+
+    public void InheritancePopup()
+    {
+        PlayerController2 player = GetPlayer(turnNum);
+        int inheritance;
+        if(player.GetClass() == 0)
+        {
+            inheritance = 100;
+        }
+        else if(player.GetClass() == 1)
+        {
+            inheritance = 200;
+        }
+        else
+        {
+            inheritance = 600;
+        }
+
+        player.AddWealth(inheritance);
+
+        popup.title.SetText("You have inherited: " + inheritance + "\nFor a total of: " + player.GetWealth());
+        popup.button.textBox.SetText("Get an Education");
+        popup.button.SetListener(EducationPopup);
+        OpenPopup();
+    }
+
+    public void InitialClassPopup()
+    {
+        PlayerController2 player = GetPlayer(turnNum);
+        player.SetClass(ChooseRandom(classChances));
+
+        popup.title.SetText("You are: \n" + player.namedClass() + " Class");
+        popup.button.textBox.SetText("Collect Inheritance");
+
+        popup.button.SetListener(InheritancePopup);
+        OpenPopup();
+    }
+
+    public void ReadyPopup()
+    {
+        popup.title.SetText("Player " + turnNum + ", Ready!");
+        
+        if(roundNum != 0)
+        {
+            popup.button.textBox.SetText("Start Turn");
+            popup.button.SetListener(ClosePopup);
+        }
+        else
+        {
+            popup.button.textBox.SetText("Roll for Class");
+            popup.button.SetListener(InitialClassPopup);
+        }
+        OpenPopup();
+    }
 
     public void StartGame()
     {
-        popup.gameObject.SetActive(true);
-        popup.titleText.text = "Player 1, Start!";
-        playerNumber = 1;
-        popup.announcementText.text = "Press \"Ready\" to generate your initial class and inheritance.";
-        popup.SwitchButtons(0);
-
-        generationsLeft = Context.numGenerations;
-        turnsLeftInGen = Context.numTurnsPerGen;
-
-        turnCounter.text = "Turns Left: " + turnsLeftInGen.ToString();
-        genCounter.text = "Generations Left: " + generationsLeft.ToString();
-
-
-        int probChoice = ProbDistribution(initialClassProbabilities);
-
-        players[playerNumber - 1].SetWealth(startingWealthOptions[probChoice]);
-        players[playerNumber - 1].SetClass(probChoice);
+        turnNum = 1;
+        ReadyPopup();
     }
-
-    public void NextTurn()
-    {
-        playerNumber++;
-        currentPlayerLabel.text = "Player " + playerNumber.ToString();
-        if (playerNumber > 4)
-        {
-            playerNumber = 1;
-            currentPlayerLabel.text = "Player " + playerNumber.ToString();
-            turnsLeftInGen--;
-            turnCounter.text = "Turns Left: " + turnsLeftInGen.ToString();
-            if (turnsLeftInGen == 0)
-            {
-                turnsLeftInGen = Context.numTurnsPerGen;
-                turnCounter.text = "Turns Left: " + turnsLeftInGen.ToString();
-                generationsLeft--;
-                genCounter.text = "Generations Left: " + generationsLeft.ToString();
-                if (generationsLeft == 0)
-                {
-                    EndGame();
-                }
-            }
-        }
-    }
-
-    void EndGame()
-    {
-        popup.gameObject.SetActive(true);
-        popup.titleText.text = "The End";
-        popup.announcementText.text = "A Pretty Owesome Games Production";
-        popup.SwitchButtons(1);
-
-    }
-
-    */
 
     void Start()
     {
@@ -116,9 +164,9 @@ public class GameManager2 : MonoBehaviour
         Rect canvasRect = gameObject.GetComponent<RectTransform>().rect;
 
         container.PlaceElement(new Vector2(canvasRect.width, canvasRect.height), Vector2.zero);
+        popupContainer.PlaceElement(new Vector2(canvasRect.width, canvasRect.height), Vector2.zero);
 
-
-        // StartGame();
+        StartGame();
     }
 
 
