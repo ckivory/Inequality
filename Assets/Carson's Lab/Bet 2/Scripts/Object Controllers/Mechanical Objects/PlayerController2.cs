@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerController2 : MonoBehaviour
 {
+    public TextBoxController2 wealthText;
+    public TextBoxController2 educationText;
+    public TextBoxController2 classText;
+
     protected int wealth = 0;
     protected int education = 0;
     protected int socialClass = 0;
@@ -40,6 +44,11 @@ public class PlayerController2 : MonoBehaviour
         }
     }
 
+    public int GetPlayerNum()
+    {
+        return GameManager2.Instance.players.IndexOf(this) + 1;
+    }
+
     public int GetWealth()
     {
         return wealth;
@@ -63,15 +72,18 @@ public class PlayerController2 : MonoBehaviour
     public void SetWealth(int newWealth)
     {
         wealth = newWealth;
+        wealthText.SetText(wealth.ToString());
     }
 
     public void SetEducation(int newEducation)
     {
         education = newEducation;
+        educationText.SetText(namedEducation());
     }
 
     public void SetClass(int newClass)
     {
         socialClass = newClass;
+        classText.SetText(namedClass());
     }
 }

@@ -23,10 +23,14 @@ public class GameManager2 : MonoBehaviour
     public List<float> highEducationChances;
 
     public List<int> incomeLevels;
+    public List<int> funeralCosts;
 
-    private int turnNum = 0;
-    private int roundNum = 0;
-    private int generationNum = 0;
+    private int turnNum = 1;
+    private int roundNum = 1;
+    private int generationNum = 1;
+
+    public int roundsPerGen;
+    public int gensPerGame;
 
     public void ClosePopup()
     {
@@ -38,6 +42,21 @@ public class GameManager2 : MonoBehaviour
     {
         popupContainer.gameObject.SetActive(true);
         EndTurnButton.SetInteractible(false);
+    }
+
+    public PlayerController2 GetCurrentPlayer()
+    {
+        return players[turnNum - 1];
+    }
+
+    public int RoundsLeft()
+    {
+        return roundsPerGen - roundNum;
+    }
+
+    public int GensLeft()
+    {
+        return gensPerGame - generationNum;
     }
 
     private PlayerController2 GetPlayer(int playerNumber)
@@ -66,7 +85,7 @@ public class GameManager2 : MonoBehaviour
         PlayerController2 player = GetPlayer(turnNum);
         player.AddWealth(incomeLevels[player.GetEducation()]);
         popup.title.SetText("You collect your income of: " + incomeLevels[player.GetEducation()] + "\nFor a total of: " + player.GetWealth());
-        popup.button.textBox.SetText("Collect Income");
+        popup.button.textBox.SetText("Start Turn");
         popup.button.SetListener(ClosePopup);
         OpenPopup();
     }
@@ -113,7 +132,7 @@ public class GameManager2 : MonoBehaviour
         player.AddWealth(inheritance);
 
         popup.title.SetText("You have inherited: " + inheritance + "\nFor a total of: " + player.GetWealth());
-        popup.button.textBox.SetText("Get an Education");
+        popup.button.textBox.SetText("Roll for Education");
         popup.button.SetListener(EducationPopup);
         OpenPopup();
     }
@@ -130,21 +149,76 @@ public class GameManager2 : MonoBehaviour
         OpenPopup();
     }
 
+    public void NextClassPopup()
+    {
+        PlayerController2 player = GetPlayer(turnNum);
+
+        popup.title.SetText("Because of your current education, your future class is:\n" + player.namedClass());
+        popup.button.textBox.SetText("Roll for education");
+        popup.button.SetListener(EducationPopup);
+    }
+
+    public void FuneralPopup()
+    {
+        PlayerController2 player = GetPlayer(turnNum);
+
+        player.AddWealth(-1 * funeralCosts[player.GetClass()]);
+        popup.title.SetText("We mourn the passing of Player " + turnNum + ", who is survived by their heir, Player " + turnNum + " Jr.\nThe funeral costs: " + funeralCosts[player.GetClass()]);
+        popup.button.textBox.SetText("Determine New Class");
+        popup.button.SetListener(NextClassPopup);
+    }
+
     public void ReadyPopup()
     {
-        popup.title.SetText("Player " + turnNum + ", Ready!");
-        
-        if(roundNum != 0)
+        PlayerController2 player = GetPlayer(turnNum);
+
+        if (roundNum == 1)
         {
-            popup.button.textBox.SetText("Start Turn");
-            popup.button.SetListener(ClosePopup);
+            if(generationNum == 1)
+            {
+                popup.title.SetText("Player " + turnNum + ", Ready!");
+                popup.button.textBox.SetText("Roll for Class");
+                popup.button.SetListener(InitialClassPopup);
+            }
+            else
+            {
+                popup.title.SetText("Player " + turnNum + " is dead.");
+                popup.button.textBox.SetText("Continue");
+                popup.button.SetListener(FuneralPopup);
+            }
         }
         else
         {
-            popup.button.textBox.SetText("Roll for Class");
-            popup.button.SetListener(InitialClassPopup);
+            popup.title.SetText("Player " + turnNum + ", Ready!");
+            player.SetClass(player.GetEducation());
+            popup.button.textBox.SetText("Collect Income");
+            popup.button.SetListener(IncomePopup);
         }
         OpenPopup();
+    }
+
+    private void StartTurn()
+    {
+        Debug.Log("Starting player " + turnNum + "'s turn");
+        ReadyPopup();
+    }
+
+    private void StartRound()
+    {
+        Debug.Log("Starting round " + roundNum);
+
+        turnNum = 1;
+        StartTurn();
+    }
+
+    private void StartGeneration()
+    {
+        Debug.Log("Starting generation " + generationNum);
+
+        // Determine stats based on previous stats
+
+        roundNum = 1;
+        StartRound();
     }
 
     public void StartGame()
@@ -152,6 +226,70 @@ public class GameManager2 : MonoBehaviour
         turnNum = 1;
         ReadyPopup();
     }
+    
+
+    // Called with the End Turn button
+    public void EndTurn()
+    {
+        if(turnNum < 4)
+        {
+            turnNum++;
+            StartTurn();
+        }
+        else
+        {
+            turnNum = 1;
+            EndRound();
+        }
+    }
+
+    private void EndRound()
+    {
+        // Stock appreciates every other round (if they can choose the number of rounds, what if it's odd?)
+
+        if (roundNum < roundsPerGen)
+        {
+            roundNum++;
+            StartRound();
+        }
+        else
+        {
+            roundNum = 1;
+            EndGeneration();
+        }
+    }
+
+    private void EndGeneration()
+    {
+        if (generationNum < gensPerGame)
+        {
+            generationNum++;
+            StartGeneration();
+        }
+        else
+        {
+            EndGame();
+        }
+    }
+
+    private void CloseGame()
+    {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
+    }
+
+    private void EndGame()
+    {
+        Debug.Log("End");
+        CloseGame();
+    }
+
+    
+
+
 
     void Start()
     {
