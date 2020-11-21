@@ -59,7 +59,7 @@ public class GameManager2 : MonoBehaviour
         return gensPerGame - generationNum;
     }
 
-    private PlayerController2 GetPlayer(int playerNumber)
+    public PlayerController2 GetPlayer(int playerNumber)
     {
         return players[playerNumber - 1];
     }
