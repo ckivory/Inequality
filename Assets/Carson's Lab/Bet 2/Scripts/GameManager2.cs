@@ -12,6 +12,9 @@ public class GameManager2 : MonoBehaviour
     public ColumnLayout2 popupContainer;
     public PopUpController2 popup;
 
+    public EventListController personalEvents;
+    public EventListController communityEvents;
+
     public ButtonController EndTurnButton;
     public ButtonController LoanButton;
 
@@ -70,6 +73,10 @@ public class GameManager2 : MonoBehaviour
         return chances.Count - 1;
     }
 
+    public void DisableImage()
+    {
+        popup.SetImageEnabled(false);
+    }
 
     public void ClosePopup()
     {
@@ -113,6 +120,56 @@ public class GameManager2 : MonoBehaviour
         popupContainer.gameObject.SetActive(false);
     }
 
+    public void CommunityEventPopup()
+    {
+        EventController chosenEvent = communityEvents.events[Random.Range(0, communityEvents.events.Count)];
+
+        popup.SetImage(chosenEvent.eventImage);
+
+        string eventTitle = chosenEvent.description + "\n";
+
+        for(int effectIndex = 0; effectIndex < chosenEvent.effectsByClass.Count; effectIndex++)
+        {
+            int effectAmount = chosenEvent.effectsByClass[effectIndex];
+            eventTitle += effectAmount.ToString();
+            if(effectIndex < chosenEvent.effectsByClass.Count - 1)
+            {
+                eventTitle += "\t\t";
+            }
+        }
+        
+        popup.title.SetText(eventTitle);
+
+        foreach(PlayerController2 player in players)
+        {
+            int effect = chosenEvent.effectsByClass[player.GetClass()];
+            player.AddWealth(effect);
+        }
+
+        popup.buttons[0].textBox.SetText("Next Round");
+        popup.buttons[0].SetListener(StartRound);
+        popup.buttons[0].GetOnClick().AddListener(DisableImage);
+        OpenPopup();
+    }
+
+    public void PersonalEventPopup()
+    {
+        PlayerController2 player = GetPlayer(turnNum);
+        EventController chosenEvent = personalEvents.events[Random.Range(0, personalEvents.events.Count)];
+
+        popup.SetImage(chosenEvent.eventImage);
+        popup.title.SetText(chosenEvent.description);
+
+        int effect = chosenEvent.effectsByClass[player.GetClass()];
+        popup.buttons[0].textBox.SetText(effect.ToString());
+
+        player.AddWealth(effect);
+
+        popup.buttons[0].SetListener(ClosePopup);
+        popup.buttons[0].GetOnClick().AddListener(DisableImage);
+        OpenPopup();
+    }
+
     public void LoanPopup()
     {
         PlayerController2 player = GetPlayer(turnNum);
@@ -149,9 +206,6 @@ public class GameManager2 : MonoBehaviour
                 popup.buttons[1].SetInteractible(false);
             }
 
-            
-
-
             OpenPopup();
         }
         else
@@ -179,8 +233,8 @@ public class GameManager2 : MonoBehaviour
         popup.title.SetText(incomeText);
 
 
-        popup.buttons[0].textBox.SetText("Start Turn");
-        popup.buttons[0].SetListener(ClosePopup);
+        popup.buttons[0].textBox.SetText("Draw Event");
+        popup.buttons[0].SetListener(PersonalEventPopup);
         OpenPopup();
     }
 
@@ -356,12 +410,13 @@ public class GameManager2 : MonoBehaviour
 
     private void EndRound()
     {
-        // Stock appreciates every other round (if they can choose the number of rounds, what if it's odd?)
+        // Stock prices change
+        // Community event
 
         if (roundNum < roundsPerGen)
         {
             roundNum++;
-            StartRound();
+            CommunityEventPopup();
         }
         else
         {
