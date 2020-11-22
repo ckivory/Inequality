@@ -13,6 +13,7 @@ public class GameManager2 : MonoBehaviour
     public PopUpController2 popup;
 
     public ButtonController EndTurnButton;
+    public ButtonController LoanButton;
 
     public List<PlayerController2> players;
 
@@ -24,6 +25,7 @@ public class GameManager2 : MonoBehaviour
 
     public List<int> incomeLevels;
     public List<int> funeralCosts;
+    public List<int> loanAmounts;
 
     private int turnNum = 1;
     private int roundNum = 1;
@@ -32,17 +34,7 @@ public class GameManager2 : MonoBehaviour
     public int roundsPerGen;
     public int gensPerGame;
 
-    public void ClosePopup()
-    {
-        popupContainer.gameObject.SetActive(false);
-        EndTurnButton.SetInteractible(true);
-    }
-
-    public void OpenPopup()
-    {
-        popupContainer.gameObject.SetActive(true);
-        EndTurnButton.SetInteractible(false);
-    }
+   
 
     public PlayerController2 GetCurrentPlayer()
     {
@@ -69,8 +61,6 @@ public class GameManager2 : MonoBehaviour
         float roll = Random.value;
         for (int choiceIndex = 0; choiceIndex < chances.Count; choiceIndex++)
         {
-            Debug.Log(chances[choiceIndex]);
-
             roll -= chances[choiceIndex];
             if (roll <= 0)
             {
@@ -80,13 +70,107 @@ public class GameManager2 : MonoBehaviour
         return chances.Count - 1;
     }
 
+
+    public void ClosePopup()
+    {
+        PlayerController2 player = GetPlayer(turnNum);
+
+        EndTurnButton.SetInteractible(true);
+
+        if (player.GetEducation() < 2 && !(player.GetRemainingBalance() > 0))
+        {
+            LoanButton.SetInteractible(true);
+        }
+        else
+        {
+            LoanButton.SetInteractible(false);
+        }
+
+        popupContainer.gameObject.SetActive(false);
+    }
+
+    public void OpenPopup()
+    {
+        popupContainer.gameObject.SetActive(true);
+        EndTurnButton.SetInteractible(false);
+    }
+
+    public void TakeLoan()
+    {
+        PlayerController2 player = GetPlayer(turnNum);
+
+        if(player.GetEducation() < 2)
+        {
+            player.SetLoan(loanAmounts[player.GetEducation()]);
+            player.SetEducation(player.GetEducation() + 1);
+        }
+
+        player.MakePayment();
+
+        LoanButton.SetInteractible(false);
+        EndTurnButton.SetInteractible(true);
+
+        popupContainer.gameObject.SetActive(false);
+    }
+
+    public void LoanPopup()
+    {
+        PlayerController2 player = GetPlayer(turnNum);
+
+        Debug.Log("Player education: " + player.GetEducation());
+
+        popup.SetButtonNum(2);
+
+        if (player.GetEducation() < 2)
+        {
+            popup.title.SetText("If you go back to school, you must have: " + loanAmounts[player.GetEducation()] + "\nYou will pay 20% of this amount on each turn, and the remaining balance in the event of your death.");
+            
+            popup.buttons[0].textBox.SetText("Cancel");
+            popup.buttons[0].SetListener(ClosePopup);
+
+            popup.buttons[1].textBox.SetText("Continue");
+            
+            if (player.GetWealth() >= loanAmounts[player.GetEducation()])
+            {
+                popup.buttons[1].SetListener(TakeLoan);
+                popup.buttons[1].SetInteractible(true);
+            }
+            else
+            {
+                popup.buttons[1].SetInteractible(false);
+            }
+
+            
+
+
+            OpenPopup();
+        }
+        else
+        {
+            LoanButton.SetInteractible(false);
+            Debug.Log("Loan Button should not have been interactible");
+        }
+    }
+
     public void IncomePopup()
     {
         PlayerController2 player = GetPlayer(turnNum);
         player.AddWealth(incomeLevels[player.GetEducation()]);
-        popup.title.SetText("You collect your income of: " + incomeLevels[player.GetEducation()] + "\nFor a total of: " + player.GetWealth());
-        popup.button.textBox.SetText("Start Turn");
-        popup.button.SetListener(ClosePopup);
+
+        popup.SetButtonNum(1);
+
+        string incomeText = "You collect your income of: " + incomeLevels[player.GetEducation()];
+
+        if(player.GetRemainingBalance() > 0)
+        {
+            incomeText += "\nYou make another loan payment of: " + player.GetPaymentAmount();
+        }
+
+        popup.title.SetText(incomeText);
+
+
+        popup.buttons[0].textBox.SetText("Start Turn");
+        popup.buttons[0].SetListener(ClosePopup);
         OpenPopup();
     }
 
@@ -106,9 +190,11 @@ public class GameManager2 : MonoBehaviour
             player.SetEducation(ChooseRandom(highEducationChances));
         }
 
+        popup.SetButtonNum(1);
+
         popup.title.SetText("You receive a " + player.namedEducation() + " education\nAnd will have an income of " + incomeLevels[player.GetEducation()]);
-        popup.button.textBox.SetText("Collect Income");
-        popup.button.SetListener(IncomePopup);
+        popup.buttons[0].textBox.SetText("Collect Income");
+        popup.buttons[0].SetListener(IncomePopup);
         OpenPopup();
     }
 
@@ -131,9 +217,11 @@ public class GameManager2 : MonoBehaviour
 
         player.AddWealth(inheritance);
 
+        popup.SetButtonNum(1);
+
         popup.title.SetText("You have inherited: " + inheritance + "\nFor a total of: " + player.GetWealth());
-        popup.button.textBox.SetText("Roll for Education");
-        popup.button.SetListener(EducationPopup);
+        popup.buttons[0].textBox.SetText("Roll for Education");
+        popup.buttons[0].SetListener(EducationPopup);
         OpenPopup();
     }
 
@@ -142,10 +230,12 @@ public class GameManager2 : MonoBehaviour
         PlayerController2 player = GetPlayer(turnNum);
         player.SetClass(ChooseRandom(classChances));
 
-        popup.title.SetText("You are: \n" + player.namedClass() + " Class");
-        popup.button.textBox.SetText("Collect Inheritance");
+        popup.SetButtonNum(1);
 
-        popup.button.SetListener(InheritancePopup);
+        popup.title.SetText("You are: \n" + player.namedClass() + " Class");
+        popup.buttons[0].textBox.SetText("Collect Inheritance");
+
+        popup.buttons[0].SetListener(InheritancePopup);
         OpenPopup();
     }
 
@@ -153,70 +243,81 @@ public class GameManager2 : MonoBehaviour
     {
         PlayerController2 player = GetPlayer(turnNum);
 
+        popup.SetButtonNum(1);
+
         popup.title.SetText("Because of your current education, your future class is:\n" + player.namedClass());
-        popup.button.textBox.SetText("Roll for education");
-        popup.button.SetListener(EducationPopup);
+        popup.buttons[0].textBox.SetText("Roll for education");
+        popup.buttons[0].SetListener(EducationPopup);
     }
 
     public void FuneralPopup()
     {
         PlayerController2 player = GetPlayer(turnNum);
 
+        popup.SetButtonNum(1);
+
         player.AddWealth(-1 * funeralCosts[player.GetClass()]);
-        popup.title.SetText("We mourn the passing of Player " + turnNum + ", who is survived by their heir, Player " + turnNum + " Jr.\nThe funeral costs: " + funeralCosts[player.GetClass()]);
-        popup.button.textBox.SetText("Determine New Class");
-        popup.button.SetListener(NextClassPopup);
+
+        string funeralText =
+            "We mourn the passing of Player " + turnNum + ", who is survived by their heir, Player " + turnNum + " Jr.\n"
+            + "The funeral costs: " + funeralCosts[player.GetClass()];
+        
+        if(player.GetRemainingBalance() > 0)
+        {
+            funeralText += "\nTheir remaining student loan balance of " + player.GetRemainingBalance() + " is taken out of their estate.";
+            player.PayRemainingBalance();
+        }
+
+        popup.title.SetText(funeralText);
+
+        popup.buttons[0].textBox.SetText("Determine New Class");
+        popup.buttons[0].SetListener(NextClassPopup);
     }
 
     public void ReadyPopup()
     {
         PlayerController2 player = GetPlayer(turnNum);
 
+        popup.SetButtonNum(1);
+
         if (roundNum == 1)
         {
             if(generationNum == 1)
             {
                 popup.title.SetText("Player " + turnNum + ", Ready!");
-                popup.button.textBox.SetText("Roll for Class");
-                popup.button.SetListener(InitialClassPopup);
+                popup.buttons[0].textBox.SetText("Roll for Class");
+                popup.buttons[0].SetListener(InitialClassPopup);
             }
             else
             {
                 popup.title.SetText("Player " + turnNum + " is dead.");
-                popup.button.textBox.SetText("Continue");
-                popup.button.SetListener(FuneralPopup);
+                popup.buttons[0].textBox.SetText("Continue");
+                popup.buttons[0].SetListener(FuneralPopup);
             }
         }
         else
         {
             popup.title.SetText("Player " + turnNum + ", Ready!");
             player.SetClass(player.GetEducation());
-            popup.button.textBox.SetText("Collect Income");
-            popup.button.SetListener(IncomePopup);
+            popup.buttons[0].textBox.SetText("Collect Income");
+            popup.buttons[0].SetListener(IncomePopup);
         }
         OpenPopup();
     }
 
     private void StartTurn()
     {
-        Debug.Log("Starting player " + turnNum + "'s turn");
         ReadyPopup();
     }
 
     private void StartRound()
     {
-        Debug.Log("Starting round " + roundNum);
-
         turnNum = 1;
         StartTurn();
     }
 
     private void StartGeneration()
     {
-        Debug.Log("Starting generation " + generationNum);
-
-        // Determine stats based on previous stats
-
         roundNum = 1;
         StartRound();
     }
@@ -283,12 +384,8 @@ public class GameManager2 : MonoBehaviour
 
     private void EndGame()
     {
-        Debug.Log("End");
         CloseGame();
     }
-
-    
-
 
 
     void Start()

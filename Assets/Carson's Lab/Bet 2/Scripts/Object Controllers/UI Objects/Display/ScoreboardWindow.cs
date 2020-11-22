@@ -24,8 +24,6 @@ public class ScoreboardWindow : MonoBehaviour
             maxWealth = Mathf.Max(maxWealth, player.GetWealth());
         }
 
-        Debug.Log("Max wealth: " + maxWealth);
-
         for(int markerIndex = 0; markerIndex < 4; markerIndex++)
         {
             PlayerController2 player = GameManager2.Instance.GetPlayer(markerIndex + 1);

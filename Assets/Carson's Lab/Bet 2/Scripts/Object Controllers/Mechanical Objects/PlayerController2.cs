@@ -11,6 +11,8 @@ public class PlayerController2 : MonoBehaviour
     protected int wealth = 0;
     protected int education = 0;
     protected int socialClass = 0;
+    protected int loanTotal = 0;
+    protected int loanRemaining = 0;
     
     public string namedClass()
     {
@@ -85,5 +87,44 @@ public class PlayerController2 : MonoBehaviour
     {
         socialClass = newClass;
         classText.SetText(namedClass());
+    }
+
+    public void SetLoan(int loanAmount)
+    {
+        Debug.Log("Setting loan to: " + loanAmount);
+        loanTotal = loanAmount;
+        loanRemaining = loanTotal;
+    }
+
+    public int GetPaymentAmount()
+    {
+        return (int)(loanTotal * 0.2f);
+    }
+
+    public void MakePayment()
+    {
+        if(loanRemaining > 0)
+        {
+            int payment = GetPaymentAmount();
+            if(wealth > payment)
+            {
+                wealth -= payment;
+                loanRemaining -= payment;
+            }
+        }
+    }
+
+    public void PayRemainingBalance()
+    {
+        if(wealth > loanRemaining)
+        {
+            wealth -= loanRemaining;
+            loanRemaining = 0;
+        }
+    }
+
+    public int GetRemainingBalance()
+    {
+        return loanRemaining;
     }
 }
