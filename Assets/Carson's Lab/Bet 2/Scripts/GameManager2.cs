@@ -123,7 +123,16 @@ public class GameManager2 : MonoBehaviour
 
         if (player.GetEducation() < 2)
         {
-            popup.title.SetText("If you go back to school, you must have: " + loanAmounts[player.GetEducation()] + "\nYou will pay 20% of this amount on each turn, and the remaining balance in the event of your death.");
+            string nextEducation;
+            if(player.GetEducation() == 0)
+            {
+                nextEducation = "Graduate";
+            }
+            else
+            {
+                nextEducation = "Post-Graduate";
+            }
+            popup.title.SetText("To go back for a " + nextEducation + " degree, you must have: " + loanAmounts[player.GetEducation()] + "\nYou will pay 20% of this amount on each turn, and the remaining balance in the event of your death.");
             
             popup.buttons[0].textBox.SetText("Cancel");
             popup.buttons[0].SetListener(ClosePopup);
@@ -164,6 +173,7 @@ public class GameManager2 : MonoBehaviour
         if(player.GetRemainingBalance() > 0)
         {
             incomeText += "\nYou make another loan payment of: " + player.GetPaymentAmount();
+            player.MakePayment();
         }
 
         popup.title.SetText(incomeText);
