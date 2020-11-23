@@ -175,10 +175,30 @@ public class GameManager2 : MonoBehaviour
         popup.SetImage(chosenEvent.eventImage);
         popup.title.SetText(chosenEvent.description);
 
-        int effect = chosenEvent.effectsByClass[player.GetClass()];
-        popup.buttons[0].textBox.SetText(effect.ToString());
+        if(chosenEvent.special == EventController.SpecialEffect.None)
+        {
+            int effect = chosenEvent.effectsByClass[player.GetClass()];
+            popup.buttons[0].textBox.SetText(effect.ToString());
 
-        player.ChangeWealth(effect);
+            player.ChangeWealth(effect);
+        }
+        else if(chosenEvent.special == EventController.SpecialEffect.Scholarship)
+        {
+            if(player.GetEducation() < 2)
+            {
+                player.SetEducation(player.GetEducation() + 1);
+                popup.buttons[0].textBox.SetText("Get a Free " + player.namedEducation() + " Degree");
+            }
+            else
+            {
+                popup.buttons[0].textBox.SetText("Nothing Happens");
+            }
+        }
+        else if(chosenEvent.special == EventController.SpecialEffect.Divorce)
+        {
+            player.ChangeWealth(-1 * player.GetWealth() / 2);
+            popup.buttons[0].textBox.SetText("Lose Half of your Wealth");
+        }
 
         popup.buttons[0].SetListener(ClosePopup);
         popup.buttons[0].GetOnClick().AddListener(DisableImage);
