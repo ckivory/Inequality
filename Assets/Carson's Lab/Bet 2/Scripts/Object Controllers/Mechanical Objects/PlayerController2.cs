@@ -8,6 +8,8 @@ public class PlayerController2 : MonoBehaviour
     public TextBoxController2 educationText;
     public TextBoxController2 classText;
 
+    public List<TextBoxController2> stockTexts;
+
     protected int wealth = 0;
     protected int education = 0;
     protected int socialClass = 0;
@@ -157,5 +159,10 @@ public class PlayerController2 : MonoBehaviour
     public void ChangeStocks(int stockIndex, int delta)
     {
         stockQuantities[stockIndex] += delta;
+
+        for(int i = 0; i < 3; i++)
+        {
+            stockTexts[i].SetText(stockQuantities[i].ToString());
+        }
     }
 }

@@ -43,11 +43,10 @@ public class GameManager2 : MonoBehaviour
 
     public PlayerController2 GetCurrentPlayer()
     {
-        if(turnNum < 0 || turnNum >= players.Count)
+        if(turnNum - 1 < 0 || turnNum > players.Count)
         {
-            return null;
+            throw new System.Exception("Cannot get current player");
         }
-
         return players[turnNum - 1];
     }
 
@@ -404,6 +403,11 @@ public class GameManager2 : MonoBehaviour
     // Called with the End Turn button
     public void EndTurn()
     {
+        foreach(StockController stock in stockOptions)
+        {
+            stock.ResetAmount();
+        }
+
         if(turnNum < 4)
         {
             turnNum++;

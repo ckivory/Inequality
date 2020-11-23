@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class CurrentStocksWindow : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public List<TextBoxController2> quantityTexts;
+    public List<TextBoxController2> priceTexts;
 
-    // Update is called once per frame
     void Update()
     {
-        
+        PlayerController2 player = GameManager2.Instance.GetCurrentPlayer();
+        List<StockController> stocks = GameManager2.Instance.stockOptions;
+
+        for(int i = 0; i < 3; i++)
+        {
+            quantityTexts[i].SetText(player.GetStocks(i).ToString());
+            priceTexts[i].SetText(stocks[i].price.ToString());
+        }
     }
 }

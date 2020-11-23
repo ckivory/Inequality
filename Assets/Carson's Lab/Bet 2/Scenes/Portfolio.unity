@@ -4175,12 +4175,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29526d8df1a01c34f858655be57afdd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stockIndex: 0
+  price: 250
   amountText: {fileID: 1055502279}
   priceText: {fileID: 175288313}
   buyButton: {fileID: 1680228786}
   sellButton: {fileID: 1247589253}
-  stockIndex: 0
-  price: 250
 --- !u!1 &441167713
 GameObject:
   m_ObjectHideFlags: 0
@@ -6646,6 +6646,10 @@ MonoBehaviour:
   wealthText: {fileID: 921007082}
   educationText: {fileID: 2000078407}
   classText: {fileID: 521378804}
+  stockTexts:
+  - {fileID: 2076305171}
+  - {fileID: 1617912921}
+  - {fileID: 1921016520}
 --- !u!1 &716667193
 GameObject:
   m_ObjectHideFlags: 0
@@ -7317,12 +7321,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29526d8df1a01c34f858655be57afdd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stockIndex: 2
+  price: 1500
   amountText: {fileID: 138815653}
   priceText: {fileID: 1661917900}
   buyButton: {fileID: 1912692659}
   sellButton: {fileID: 1234807832}
-  stockIndex: 2
-  price: 1500
 --- !u!114 &760734580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7720,6 +7724,10 @@ MonoBehaviour:
   wealthText: {fileID: 1759231949}
   educationText: {fileID: 1104535857}
   classText: {fileID: 645679412}
+  stockTexts:
+  - {fileID: 1478969065}
+  - {fileID: 6773318}
+  - {fileID: 1504389237}
 --- !u!1 &799766223
 GameObject:
   m_ObjectHideFlags: 0
@@ -8439,6 +8447,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 540198ba4d2c2724b925d855c6f3f4dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  quantityTexts:
+  - {fileID: 277887803}
+  - {fileID: 1627594595}
+  - {fileID: 247380531}
+  priceTexts:
+  - {fileID: 1891322183}
+  - {fileID: 944597099}
+  - {fileID: 1578415279}
 --- !u!1 &906956675
 GameObject:
   m_ObjectHideFlags: 0
@@ -11616,6 +11632,10 @@ MonoBehaviour:
   wealthText: {fileID: 1637785540}
   educationText: {fileID: 20523849}
   classText: {fileID: 1649934440}
+  stockTexts:
+  - {fileID: 1578130193}
+  - {fileID: 1413398342}
+  - {fileID: 759950207}
 --- !u!1 &1229683726
 GameObject:
   m_ObjectHideFlags: 0
@@ -13856,12 +13876,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29526d8df1a01c34f858655be57afdd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stockIndex: 1
+  price: 500
   amountText: {fileID: 1109876645}
   priceText: {fileID: 1170631568}
   buyButton: {fileID: 977275501}
   sellButton: {fileID: 748522166}
-  stockIndex: 1
-  price: 500
 --- !u!114 &1465743641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15670,6 +15690,10 @@ MonoBehaviour:
   wealthText: {fileID: 1093887711}
   educationText: {fileID: 1568880599}
   classText: {fileID: 2117347937}
+  stockTexts:
+  - {fileID: 159823030}
+  - {fileID: 172784481}
+  - {fileID: 51886443}
 --- !u!1 &1617912919
 GameObject:
   m_ObjectHideFlags: 0

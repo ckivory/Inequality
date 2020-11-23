@@ -56,6 +56,11 @@ public class StockController : MonoBehaviour
         }
     }
 
+    public void ResetAmount()
+    {
+        amount = 0;
+    }
+
     public void IncreaseAmount()
     {
         amount++;
