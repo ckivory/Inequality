@@ -10,16 +10,17 @@ public class StockController : MonoBehaviour
     // Make stock change value after each round
     // Make stock payout happen after every other round
 
+
+    public int stockIndex;
+
+    protected int amount;
+    public int price;
+
     public TextBoxController2 amountText;
     public TextBoxController2 priceText;
 
     public ButtonController buyButton;
     public ButtonController sellButton;
-
-    public int stockIndex;
-
-    protected int amount;
-    protected int price;
 
     /*
     public float growthRate;
@@ -29,7 +30,7 @@ public class StockController : MonoBehaviour
     public void UpdateText()
     {
         amountText.SetText("Shares: " + amount.ToString());
-        amountText.UpdateElement();
+        priceText.SetText("Per Stock: " + price.ToString());
     }
 
     public void UpdateButtons()

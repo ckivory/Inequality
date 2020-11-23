@@ -4180,6 +4180,7 @@ MonoBehaviour:
   buyButton: {fileID: 1680228786}
   sellButton: {fileID: 1247589253}
   stockIndex: 0
+  price: 250
 --- !u!1 &441167713
 GameObject:
   m_ObjectHideFlags: 0
@@ -7321,6 +7322,7 @@ MonoBehaviour:
   buyButton: {fileID: 1912692659}
   sellButton: {fileID: 1234807832}
   stockIndex: 2
+  price: 1500
 --- !u!114 &760734580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13859,6 +13861,7 @@ MonoBehaviour:
   buyButton: {fileID: 977275501}
   sellButton: {fileID: 748522166}
   stockIndex: 1
+  price: 500
 --- !u!114 &1465743641
 MonoBehaviour:
   m_ObjectHideFlags: 0
