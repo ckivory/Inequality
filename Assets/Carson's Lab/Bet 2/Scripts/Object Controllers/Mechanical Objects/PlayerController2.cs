@@ -13,7 +13,9 @@ public class PlayerController2 : MonoBehaviour
     protected int socialClass = 0;
     protected int loanTotal = 0;
     protected int loanRemaining = 0;
-    
+
+    protected List<int> stockQuantities = new List<int>() { 0, 0, 0 };
+
     public string namedClass()
     {
         if (socialClass == 0)
@@ -29,6 +31,7 @@ public class PlayerController2 : MonoBehaviour
             return "High";
         }
     }
+
 
     public string namedEducation()
     {
@@ -51,25 +54,30 @@ public class PlayerController2 : MonoBehaviour
         return GameManager2.Instance.players.IndexOf(this) + 1;
     }
 
+
     public int GetWealth()
     {
         return wealth;
     }
+
 
     public int GetEducation()
     {
         return education;
     }
 
+
     public int GetClass()
     {
         return socialClass;
     }
 
+
     public void AddWealth(int delta)
     {
         SetWealth(wealth + delta);
     }
+
 
     public void SetWealth(int newWealth)
     {
@@ -77,17 +85,20 @@ public class PlayerController2 : MonoBehaviour
         wealthText.SetText(wealth.ToString());
     }
 
+
     public void SetEducation(int newEducation)
     {
         education = newEducation;
         educationText.SetText(namedEducation());
     }
 
+
     public void SetClass(int newClass)
     {
         socialClass = newClass;
         classText.SetText(namedClass());
     }
+
 
     public void SetLoan(int loanAmount)
     {
@@ -96,10 +107,12 @@ public class PlayerController2 : MonoBehaviour
         loanRemaining = loanTotal;
     }
 
+
     public int GetPaymentAmount()
     {
         return (int)(loanTotal * 0.2f);
     }
+
 
     public void MakePayment()
     {
@@ -114,6 +127,7 @@ public class PlayerController2 : MonoBehaviour
         }
     }
 
+
     public void PayRemainingBalance()
     {
         if(wealth > loanRemaining)
@@ -123,8 +137,25 @@ public class PlayerController2 : MonoBehaviour
         }
     }
 
+
     public int GetRemainingBalance()
     {
         return loanRemaining;
+    }
+
+
+    public int GetStocks(int stockIndex)
+    {
+        if (stockIndex < stockQuantities.Count)
+        {
+            return stockQuantities[stockIndex];
+        }
+
+        return -1;
+    }
+
+    public void ChangeStocks(int stockIndex, int changeAmount)
+    {
+        stockQuantities[stockIndex] += changeAmount;
     }
 }

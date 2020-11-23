@@ -30,6 +30,8 @@ public class GameManager2 : MonoBehaviour
     public List<int> funeralCosts;
     public List<int> loanAmounts;
 
+    public List<StockController> stockOptions;
+
     private int turnNum = 1;
     private int roundNum = 1;
     private int generationNum = 1;
@@ -41,6 +43,11 @@ public class GameManager2 : MonoBehaviour
 
     public PlayerController2 GetCurrentPlayer()
     {
+        if(turnNum < 0 || turnNum >= players.Count)
+        {
+            return null;
+        }
+
         return players[turnNum - 1];
     }
 
@@ -371,6 +378,10 @@ public class GameManager2 : MonoBehaviour
 
     private void StartTurn()
     {
+        foreach (StockController stock in stockOptions)
+        {
+            stock.InitializeStock();
+        }
         ReadyPopup();
     }
 
@@ -389,6 +400,7 @@ public class GameManager2 : MonoBehaviour
     public void StartGame()
     {
         turnNum = 1;
+
         ReadyPopup();
     }
     
