@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager2 : MonoBehaviour
@@ -38,6 +39,8 @@ public class GameManager2 : MonoBehaviour
 
     public int roundsPerGen;
     public int gensPerGame;
+
+    private List<int> finalResults = new List<int>() { 0, 0, 0, 0 };
 
 
     public PlayerController2 GetCurrentPlayer()
@@ -131,6 +134,133 @@ public class GameManager2 : MonoBehaviour
         EndTurnButton.SetInteractible(true);
 
         popupContainer.gameObject.SetActive(false);
+    }
+
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene("Portfolio2");
+    }
+
+
+    public int TotalStockValue(PlayerController2 player)
+    {
+        int stockValue = 0;
+
+        for(int i = 0; i < 3; i++)
+        {
+            stockValue += player.GetStocks(i) * stockOptions[i].price;
+        }
+
+        return stockValue;
+    }
+
+
+    public void HowToPlayPopup()
+    {
+        popup.SetButtonNum(1);
+
+        string tutorialText = 
+            "In this game, you buy and sell stocks and collect income in order to earn the most money. "
+            + "More expensive stocks have a higher potential return, and are less likely to depreciate.";
+        popup.title.SetText(tutorialText);
+
+        popup.buttons[0].textBox.SetText("Done");
+        popup.buttons[0].SetListener(ClosePopup);
+        OpenPopup();
+    }
+
+
+    public void WinnerPopup()
+    {
+        popup.SetButtonNum(2);
+
+        List<int> winnerIndeces = new List<int>();
+
+        for(int i = 0; i < finalResults.Count; i++)
+        {
+            if(winnerIndeces.Count == 0)
+            {
+                winnerIndeces.Add(i);
+            }
+            else
+            {
+                if(finalResults[i] == finalResults[winnerIndeces[0]])
+                {
+                    winnerIndeces.Add(i);
+                }
+                else if(finalResults[i] > finalResults[winnerIndeces[0]])
+                {
+                    winnerIndeces = new List<int>() { i };
+                }
+            }
+        }
+
+        string winnerText = "Congratulations, ";
+        if (winnerIndeces.Count == 1)
+        {
+            winnerText += "Player " + (winnerIndeces[0] + 1) + "!\nYou Win!";
+        }
+        else
+        {
+            winnerText += "Players ";
+            for (int indexIndex = 0; indexIndex < winnerIndeces.Count; indexIndex++)
+            {
+                winnerText += (winnerIndeces[indexIndex] + 1).ToString();
+                if(indexIndex < winnerIndeces.Count - 2)
+                {
+                    winnerText += ", ";
+                }
+                else
+                {
+                    winnerText += " and ";
+                }
+            }
+            winnerText += "\nYou Tied!";
+        }
+
+        popup.title.SetText(winnerText);
+
+        popup.buttons[0].textBox.SetText("Play Again");
+        popup.buttons[0].SetListener(RestartGame);
+
+        popup.buttons[1].textBox.SetText("Quit");
+        popup.buttons[1].SetListener(CloseGame);
+        OpenPopup();
+    }
+
+
+    public void ResultsPopup()
+    {
+        popup.SetButtonNum(1);
+
+        string resultsText = "Results:";
+
+        for(int i = 0; i < players.Count; i++)
+        {
+            PlayerController2 player = players[i];
+            int netWorth = player.GetWealth() + TotalStockValue(player);
+            resultsText += "\nPlayer " + (i + 1) + ": " + player.GetWealth() + " wealth + " + TotalStockValue(player) + " in stocks = " + netWorth;
+
+            finalResults[i] = netWorth;
+        }
+
+        popup.title.SetText(resultsText);
+
+        popup.buttons[0].textBox.SetText("Continue");
+        popup.buttons[0].SetListener(WinnerPopup);
+        OpenPopup();
+    }
+
+
+    public void EndGamePopup()
+    {
+        popup.SetButtonNum(1);
+
+        popup.title.SetText("End of Game");
+        popup.buttons[0].textBox.SetText("See Results");
+        popup.buttons[0].SetListener(ResultsPopup);
+        OpenPopup();
     }
 
 
@@ -514,7 +644,7 @@ public class GameManager2 : MonoBehaviour
     }
 
 
-    private void CloseGame()
+    public void CloseGame()
     {
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
@@ -526,7 +656,7 @@ public class GameManager2 : MonoBehaviour
 
     private void EndGame()
     {
-        CloseGame();
+        EndGamePopup();
     }
 
 
