@@ -4177,6 +4177,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stockIndex: 0
   price: 250
+  growthRate: 0.02
+  dividendPercent: 0.01
   amountText: {fileID: 1055502279}
   priceText: {fileID: 175288313}
   buyButton: {fileID: 1680228786}
@@ -7323,6 +7325,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stockIndex: 2
   price: 1500
+  growthRate: 0.1
+  dividendPercent: 0.05
   amountText: {fileID: 138815653}
   priceText: {fileID: 1661917900}
   buyButton: {fileID: 1912692659}
@@ -13878,6 +13882,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stockIndex: 1
   price: 500
+  growthRate: 0.05
+  dividendPercent: 0.025
   amountText: {fileID: 1109876645}
   priceText: {fileID: 1170631568}
   buyButton: {fileID: 977275501}

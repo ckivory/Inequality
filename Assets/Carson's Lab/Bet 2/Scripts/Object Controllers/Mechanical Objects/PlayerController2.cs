@@ -145,6 +145,15 @@ public class PlayerController2 : MonoBehaviour
         return loanRemaining;
     }
 
+    public bool HasStocks()
+    {
+        int totalStocks = 0;
+        foreach(int stockAmount in stockQuantities)
+        {
+            totalStocks += stockAmount;
+        }
+        return totalStocks > 0;
+    }
 
     public int GetStocks(int stockIndex)
     {

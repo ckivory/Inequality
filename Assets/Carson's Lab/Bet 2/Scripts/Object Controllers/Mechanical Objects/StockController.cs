@@ -16,6 +16,9 @@ public class StockController : MonoBehaviour
     protected int amount;
     public int price;
 
+    public float growthRate;
+    public float dividendPercent;
+
     public TextBoxController2 amountText;
     public TextBoxController2 priceText;
 
@@ -86,7 +89,6 @@ public class StockController : MonoBehaviour
         {
             player.ChangeStocks(stockIndex, amount);
             player.ChangeWealth(-1 * amount * price);
-            Debug.Log("Player shares of stock " + (stockIndex + 1) + ": " + player.GetStocks(stockIndex));
         }
     }
 
@@ -98,8 +100,17 @@ public class StockController : MonoBehaviour
         {
             player.ChangeStocks(stockIndex, -1 * amount);
             player.ChangeWealth(amount * price);
-            Debug.Log("Player shares of stock " + (stockIndex + 1) + ": " + player.GetStocks(stockIndex));
         }
+    }
+
+    public void Grow()
+    {
+        price = (int)(price * (1 + growthRate));
+    }
+
+    public int DividendAmount()
+    {
+        return (int)(price * dividendPercent);
     }
 
     public void Update()

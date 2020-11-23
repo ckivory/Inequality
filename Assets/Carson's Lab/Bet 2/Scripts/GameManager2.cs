@@ -39,7 +39,6 @@ public class GameManager2 : MonoBehaviour
     public int roundsPerGen;
     public int gensPerGame;
 
-   
 
     public PlayerController2 GetCurrentPlayer()
     {
@@ -50,20 +49,24 @@ public class GameManager2 : MonoBehaviour
         return players[turnNum - 1];
     }
 
+
     public int RoundsLeft()
     {
         return roundsPerGen - roundNum;
     }
+
 
     public int GensLeft()
     {
         return gensPerGame - generationNum;
     }
 
+
     public PlayerController2 GetPlayer(int playerNumber)
     {
         return players[playerNumber - 1];
     }
+
 
     public int ChooseRandom(List<float> chances)
     {
@@ -79,10 +82,12 @@ public class GameManager2 : MonoBehaviour
         return chances.Count - 1;
     }
 
+
     public void DisableImage()
     {
         popup.SetImageEnabled(false);
     }
+
 
     public void ClosePopup()
     {
@@ -102,11 +107,13 @@ public class GameManager2 : MonoBehaviour
         popupContainer.gameObject.SetActive(false);
     }
 
+
     public void OpenPopup()
     {
         popupContainer.gameObject.SetActive(true);
         EndTurnButton.SetInteractible(false);
     }
+
 
     public void TakeLoan()
     {
@@ -125,6 +132,7 @@ public class GameManager2 : MonoBehaviour
 
         popupContainer.gameObject.SetActive(false);
     }
+
 
     public void CommunityEventPopup()
     {
@@ -158,6 +166,7 @@ public class GameManager2 : MonoBehaviour
         OpenPopup();
     }
 
+
     public void PersonalEventPopup()
     {
         PlayerController2 player = GetPlayer(turnNum);
@@ -175,6 +184,7 @@ public class GameManager2 : MonoBehaviour
         popup.buttons[0].GetOnClick().AddListener(DisableImage);
         OpenPopup();
     }
+
 
     public void LoanPopup()
     {
@@ -221,6 +231,19 @@ public class GameManager2 : MonoBehaviour
         }
     }
 
+
+    public int DividendTotal(PlayerController2 player)
+    {
+        int dividendTotal = 0;
+        for(int i = 0; i < 3; i++)
+        {
+            dividendTotal += (int)(stockOptions[i].DividendAmount() * player.GetStocks(i));
+        }
+
+        return dividendTotal;
+    }
+
+
     public void IncomePopup()
     {
         PlayerController2 player = GetPlayer(turnNum);
@@ -236,6 +259,12 @@ public class GameManager2 : MonoBehaviour
             player.MakePayment();
         }
 
+        if(player.HasStocks() && roundNum % 2 == 1)
+        {
+            incomeText += "\nYour stocks pay out a dividend of: " + DividendTotal(player);
+            player.ChangeWealth(DividendTotal(player));
+        }
+
         popup.title.SetText(incomeText);
 
 
@@ -243,6 +272,7 @@ public class GameManager2 : MonoBehaviour
         popup.buttons[0].SetListener(PersonalEventPopup);
         OpenPopup();
     }
+
 
     public void EducationPopup()
     {
@@ -267,6 +297,7 @@ public class GameManager2 : MonoBehaviour
         popup.buttons[0].SetListener(IncomePopup);
         OpenPopup();
     }
+
 
     public void InheritancePopup()
     {
@@ -295,6 +326,7 @@ public class GameManager2 : MonoBehaviour
         OpenPopup();
     }
 
+
     public void InitialClassPopup()
     {
         PlayerController2 player = GetPlayer(turnNum);
@@ -309,6 +341,7 @@ public class GameManager2 : MonoBehaviour
         OpenPopup();
     }
 
+
     public void NextClassPopup()
     {
         PlayerController2 player = GetPlayer(turnNum);
@@ -319,6 +352,7 @@ public class GameManager2 : MonoBehaviour
         popup.buttons[0].textBox.SetText("Roll for education");
         popup.buttons[0].SetListener(EducationPopup);
     }
+
 
     public void FuneralPopup()
     {
@@ -343,6 +377,7 @@ public class GameManager2 : MonoBehaviour
         popup.buttons[0].textBox.SetText("Determine New Class");
         popup.buttons[0].SetListener(NextClassPopup);
     }
+
 
     public void ReadyPopup()
     {
@@ -375,10 +410,12 @@ public class GameManager2 : MonoBehaviour
         OpenPopup();
     }
 
+
     private void StartTurn()
     {
         ReadyPopup();
     }
+
 
     private void StartRound()
     {
@@ -386,11 +423,13 @@ public class GameManager2 : MonoBehaviour
         StartTurn();
     }
 
+
     private void StartGeneration()
     {
         roundNum = 1;
         StartRound();
     }
+
 
     public void StartGame()
     {
@@ -420,10 +459,13 @@ public class GameManager2 : MonoBehaviour
         }
     }
 
+
     private void EndRound()
     {
-        // Stock prices change
-        // Community event
+        foreach(StockController stock in stockOptions)
+        {
+            stock.Grow();
+        }
 
         if (roundNum < roundsPerGen)
         {
@@ -436,6 +478,7 @@ public class GameManager2 : MonoBehaviour
             EndGeneration();
         }
     }
+
 
     private void EndGeneration()
     {
@@ -450,6 +493,7 @@ public class GameManager2 : MonoBehaviour
         }
     }
 
+
     private void CloseGame()
     {
         #if UNITY_EDITOR
@@ -458,6 +502,7 @@ public class GameManager2 : MonoBehaviour
             Application.Quit();
         #endif
     }
+
 
     private void EndGame()
     {
