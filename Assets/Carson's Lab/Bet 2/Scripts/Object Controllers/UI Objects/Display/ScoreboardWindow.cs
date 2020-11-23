@@ -11,26 +11,33 @@ public class ScoreboardWindow : MonoBehaviour
     public Image scoreboard;
     public List<Image> markers;
 
-    // Update is called once per frame
+    
     void Update()
     {
         roundText.SetText("Rounds Left: " + GameManager2.Instance.RoundsLeft().ToString());
         genText.SetText("Generations Left: " + GameManager2.Instance.GensLeft().ToString());
 
-        int maxWealth = 0;
-        for(int playerIndex = 1; playerIndex <= 4; playerIndex++)
+        // Find min and max wealth
+        PlayerController2 player1 = GameManager2.Instance.GetPlayer(1);
+        int minWealth = player1.GetWealth();
+        int maxWealth = player1.GetWealth();
+        for(int playerIndex = 2; playerIndex <= 4; playerIndex++)
         {
             PlayerController2 player = GameManager2.Instance.GetPlayer(playerIndex);
+            minWealth = Mathf.Min(minWealth, player.GetWealth());
             maxWealth = Mathf.Max(maxWealth, player.GetWealth());
         }
 
-        for(int markerIndex = 0; markerIndex < 4; markerIndex++)
+        float scoreboardWidth = scoreboard.GetComponent<RectTransform>().rect.width;
+        float wealthRange = maxWealth - minWealth;
+
+        for (int markerIndex = 0; markerIndex < 4; markerIndex++)
         {
             PlayerController2 player = GameManager2.Instance.GetPlayer(markerIndex + 1);
-            float scoreboardWidth = scoreboard.GetComponent<RectTransform>().rect.width;
-            if(maxWealth > 0)
+            if(wealthRange > 0)
             {
-                markers[markerIndex].transform.localPosition = new Vector2(scoreboardWidth * (((float)player.GetWealth() / maxWealth) - 0.5f), 0f);
+                float rangeFraction = (float)(player.GetWealth() - minWealth) / wealthRange;
+                markers[markerIndex].transform.localPosition = new Vector2(scoreboardWidth * (rangeFraction - 0.5f), 0f);
             }
         }
     }

@@ -16,7 +16,9 @@ public class StockController : MonoBehaviour
     protected int amount;
     public int price;
 
-    public float growthRate;
+    public float growthMin;
+    public float growthMax;
+
     public float dividendPercent;
 
     public TextBoxController2 amountText;
@@ -105,6 +107,7 @@ public class StockController : MonoBehaviour
 
     public void Grow()
     {
+        float growthRate = Random.Range(growthMin, growthMax);
         price = (int)(price * (1 + growthRate));
     }
 
