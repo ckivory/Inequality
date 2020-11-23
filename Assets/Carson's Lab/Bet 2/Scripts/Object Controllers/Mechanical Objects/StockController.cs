@@ -36,8 +36,6 @@ public class StockController : MonoBehaviour
     {
         PlayerController2 player = GameManager2.Instance.GetCurrentPlayer();
 
-        Debug.Log(player);
-
         if (player.GetWealth() >= price * amount && amount > 0)
         {
             buyButton.SetInteractible(true);
@@ -57,18 +55,9 @@ public class StockController : MonoBehaviour
         }
     }
 
-    public void InitializeStock()
-    {
-        amount = 0;
-        UpdateText();
-        UpdateButtons();
-    }
-
     public void IncreaseAmount()
     {
         amount++;
-        UpdateText();
-        UpdateButtons();
     }
 
     public void DecreaseAmount()
@@ -81,9 +70,6 @@ public class StockController : MonoBehaviour
         {
             amount = 0;
         }
-
-        UpdateText();
-        UpdateButtons();
     }
 
     public void BuyStock()
@@ -92,11 +78,9 @@ public class StockController : MonoBehaviour
 
         if (player.GetWealth() >= price * amount)
         {
-            Debug.Log("Successfully bought");
-        }
-        else
-        {
-            Debug.Log("Unsuccessfully bought");
+            player.ChangeStocks(stockIndex, amount);
+            player.ChangeWealth(-1 * amount * price);
+            Debug.Log("Player shares of stock " + (stockIndex + 1) + ": " + player.GetStocks(stockIndex));
         }
     }
 
@@ -106,11 +90,15 @@ public class StockController : MonoBehaviour
 
         if (player.GetStocks(stockIndex) >= amount)
         {
-            Debug.Log("Successfully sold");
+            player.ChangeStocks(stockIndex, -1 * amount);
+            player.ChangeWealth(amount * price);
+            Debug.Log("Player shares of stock " + (stockIndex + 1) + ": " + player.GetStocks(stockIndex));
         }
-        else
-        {
-            Debug.Log("Unsuccessfully sold");
-        }
+    }
+
+    public void Update()
+    {
+        UpdateText();
+        UpdateButtons();
     }
 }

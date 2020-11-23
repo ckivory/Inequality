@@ -150,7 +150,7 @@ public class GameManager2 : MonoBehaviour
         foreach(PlayerController2 player in players)
         {
             int effect = chosenEvent.effectsByClass[player.GetClass()];
-            player.AddWealth(effect);
+            player.ChangeWealth(effect);
         }
 
         popup.buttons[0].textBox.SetText("Next Round");
@@ -170,7 +170,7 @@ public class GameManager2 : MonoBehaviour
         int effect = chosenEvent.effectsByClass[player.GetClass()];
         popup.buttons[0].textBox.SetText(effect.ToString());
 
-        player.AddWealth(effect);
+        player.ChangeWealth(effect);
 
         popup.buttons[0].SetListener(ClosePopup);
         popup.buttons[0].GetOnClick().AddListener(DisableImage);
@@ -225,7 +225,7 @@ public class GameManager2 : MonoBehaviour
     public void IncomePopup()
     {
         PlayerController2 player = GetPlayer(turnNum);
-        player.AddWealth(incomeLevels[player.GetEducation()]);
+        player.ChangeWealth(incomeLevels[player.GetEducation()]);
 
         popup.SetButtonNum(1);
 
@@ -286,7 +286,7 @@ public class GameManager2 : MonoBehaviour
             inheritance = 600;
         }
 
-        player.AddWealth(inheritance);
+        player.ChangeWealth(inheritance);
 
         popup.SetButtonNum(1);
 
@@ -327,7 +327,7 @@ public class GameManager2 : MonoBehaviour
 
         popup.SetButtonNum(1);
 
-        player.AddWealth(-1 * funeralCosts[player.GetClass()]);
+        player.ChangeWealth(-1 * funeralCosts[player.GetClass()]);
 
         string funeralText =
             "We mourn the passing of Player " + turnNum + ", who is survived by their heir, Player " + turnNum + " Jr.\n"
@@ -378,10 +378,6 @@ public class GameManager2 : MonoBehaviour
 
     private void StartTurn()
     {
-        foreach (StockController stock in stockOptions)
-        {
-            stock.InitializeStock();
-        }
         ReadyPopup();
     }
 

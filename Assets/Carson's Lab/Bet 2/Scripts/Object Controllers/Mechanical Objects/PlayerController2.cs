@@ -73,7 +73,7 @@ public class PlayerController2 : MonoBehaviour
     }
 
 
-    public void AddWealth(int delta)
+    public void ChangeWealth(int delta)
     {
         SetWealth(wealth + delta);
     }
@@ -154,8 +154,8 @@ public class PlayerController2 : MonoBehaviour
         return -1;
     }
 
-    public void ChangeStocks(int stockIndex, int changeAmount)
+    public void ChangeStocks(int stockIndex, int delta)
     {
-        stockQuantities[stockIndex] += changeAmount;
+        stockQuantities[stockIndex] += delta;
     }
 }
