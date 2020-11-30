@@ -160,9 +160,9 @@ public class GameManager2 : MonoBehaviour
     {
         popup.SetButtonNum(1);
 
-        string tutorialText = 
-            "In this game, you buy and sell stocks and collect income in order to earn the most money. "
-            + "More expensive stocks have a higher potential return, and are less likely to depreciate.";
+        string tutorialText = "How to Play\n\nIn this game, you buy and sell stocks and collect income in order to earn the most money. "
+            + "More expensive stocks have a higher potential return and are less likely to depreciate. "
+            + "Your education and the outcomes of events are based on a combination of randomness and your current class.";
         popup.title.SetText(tutorialText);
 
         popup.buttons[0].textBox.SetText("Done");
@@ -557,6 +557,21 @@ public class GameManager2 : MonoBehaviour
     }
 
 
+    public void TutorialPopup()
+    {
+        popup.SetButtonNum(1);
+
+        string tutorialText = "How to Play\n\nIn this game, you buy and sell stocks and collect income in order to earn the most money. "
+            + "More expensive stocks have a higher potential return and are less likely to depreciate. "
+            + "Your education and the outcomes of events are based on a combination of randomness and your current class.";
+        popup.title.SetText(tutorialText);
+        popup.buttons[0].textBox.SetText("Play the Game");
+
+        popup.buttons[0].SetListener(ReadyPopup);
+        OpenPopup();
+    }
+
+
     private void StartTurn()
     {
         ReadyPopup();
@@ -581,7 +596,7 @@ public class GameManager2 : MonoBehaviour
     {
         turnNum = 1;
 
-        ReadyPopup();
+        TutorialPopup();
     }
     
 
