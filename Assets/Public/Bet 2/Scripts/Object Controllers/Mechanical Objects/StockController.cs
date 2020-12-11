@@ -35,7 +35,7 @@ public class StockController : MonoBehaviour
     public void UpdateText()
     {
         amountText.SetText("Shares: " + amount.ToString());
-        priceText.SetText("Per Stock: " + price.ToString());
+        priceText.SetText("Per Stock: $" + price.ToString());
     }
 
     public void UpdateButtons()

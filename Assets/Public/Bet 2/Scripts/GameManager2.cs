@@ -277,7 +277,21 @@ public class GameManager2 : MonoBehaviour
         for(int effectIndex = 0; effectIndex < chosenEvent.effectsByClass.Count; effectIndex++)
         {
             int effectAmount = chosenEvent.effectsByClass[effectIndex];
-            eventTitle += effectAmount.ToString();
+
+            switch (effectIndex)
+            {
+                case (0):
+                    eventTitle += "Low: ";
+                    break;
+                case (1):
+                    eventTitle += "Middle: ";
+                    break;
+                case (2):
+                    eventTitle += "High: ";
+                    break;
+            }
+
+            eventTitle += "$" + effectAmount.ToString();
             if(effectIndex < chosenEvent.effectsByClass.Count - 1)
             {
                 eventTitle += "\t\t";
@@ -311,7 +325,7 @@ public class GameManager2 : MonoBehaviour
         if(chosenEvent.special == EventController.SpecialEffect.None)
         {
             int effect = chosenEvent.effectsByClass[player.GetClass()];
-            popup.buttons[0].textBox.SetText(effect.ToString());
+            popup.buttons[0].textBox.SetText(player.namedClass() + ": $" + effect.ToString());
 
             player.ChangeWealth(effect);
         }
@@ -358,7 +372,7 @@ public class GameManager2 : MonoBehaviour
             {
                 nextEducation = "Post-Graduate";
             }
-            popup.title.SetText("To go back for a " + nextEducation + " degree, you must have: " + loanAmounts[player.GetEducation()] + "\nYou will pay 20% of this amount on each turn, and the remaining balance in the event of your death.");
+            popup.title.SetText("To go back for a " + nextEducation + " degree, you must have: $" + loanAmounts[player.GetEducation()] + "\nYou will pay 20% of this amount on each turn, and the remaining balance in the event of your death.");
             
             popup.buttons[0].textBox.SetText("Cancel");
             popup.buttons[0].SetListener(ClosePopup);
@@ -397,17 +411,17 @@ public class GameManager2 : MonoBehaviour
 
         popup.SetButtonNum(1);
 
-        string incomeText = "You collect your income of: " + incomeLevels[player.GetEducation()];
+        string incomeText = "You collect your income of: $" + incomeLevels[player.GetEducation()];
 
         if(player.GetRemainingBalance() > 0)
         {
-            incomeText += "\nYou make another loan payment of: " + player.GetPaymentAmount();
+            incomeText += "\nYou make another loan payment of: $" + player.GetPaymentAmount();
             player.MakePayment();
         }
 
         if(player.HasStocks() && roundNum % 2 == 1)
         {
-            incomeText += "\nYour stocks pay out a dividend of: " + DividendTotal(player);
+            incomeText += "\nYour stocks pay out a dividend of: $" + DividendTotal(player);
             player.ChangeWealth(DividendTotal(player));
         }
 
@@ -438,7 +452,7 @@ public class GameManager2 : MonoBehaviour
 
         popup.SetButtonNum(1);
 
-        popup.title.SetText("You receive a " + player.namedEducation() + " education\nAnd will have an income of " + incomeLevels[player.GetEducation()]);
+        popup.title.SetText("You receive a " + player.namedEducation() + " education\nAnd will have an income of $" + incomeLevels[player.GetEducation()]);
         popup.buttons[0].textBox.SetText("Collect Income");
         popup.buttons[0].SetListener(IncomePopup);
         OpenPopup();
@@ -466,7 +480,7 @@ public class GameManager2 : MonoBehaviour
 
         popup.SetButtonNum(1);
 
-        popup.title.SetText("You have inherited: " + inheritance + "\nFor a total of: " + player.GetWealth());
+        popup.title.SetText("You have inherited: $" + inheritance + "\nFor a total of: $" + player.GetWealth());
         popup.buttons[0].textBox.SetText("Roll for Education");
         popup.buttons[0].SetListener(EducationPopup);
         OpenPopup();

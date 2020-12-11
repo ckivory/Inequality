@@ -84,7 +84,7 @@ public class PlayerController2 : MonoBehaviour
     public void SetWealth(int newWealth)
     {
         wealth = newWealth;
-        wealthText.SetText(wealth.ToString());
+        wealthText.SetText("$" + wealth.ToString());
     }
 
 
@@ -104,7 +104,7 @@ public class PlayerController2 : MonoBehaviour
 
     public void SetLoan(int loanAmount)
     {
-        Debug.Log("Setting loan to: " + loanAmount);
+        Debug.Log("Setting loan to: $" + loanAmount);
         loanTotal = loanAmount;
         loanRemaining = loanTotal;
     }

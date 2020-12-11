@@ -15,7 +15,7 @@ public class CurrentStocksWindow : MonoBehaviour
         for(int i = 0; i < 3; i++)
         {
             quantityTexts[i].SetText(player.GetStocks(i).ToString());
-            priceTexts[i].SetText(stocks[i].price.ToString());
+            priceTexts[i].SetText("$" + stocks[i].price.ToString());
         }
     }
 }

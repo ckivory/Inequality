@@ -15,7 +15,7 @@ public class CurrentPlayerWindow : MonoBehaviour
         PlayerController2 player = GameManager2.Instance.GetCurrentPlayer();
         playerLabel.SetText("Player " + player.GetPlayerNum());
 
-        wealthText.SetText(player.GetWealth().ToString());
+        wealthText.SetText("$" + player.GetWealth().ToString());
         educationText.SetText(player.namedEducation());
         classText.SetText(player.namedClass());
     }
