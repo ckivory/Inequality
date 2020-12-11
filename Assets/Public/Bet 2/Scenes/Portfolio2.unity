@@ -7411,7 +7411,7 @@ MonoBehaviour:
   - {fileID: 2106545385}
   - {fileID: 359347052}
   relativeSizes: 0100000002000000
-  edgeMargin: 15
+  edgeMargin: 30
   contentMargin: 15
   background: {fileID: 261909461}
 --- !u!114 &710419568
@@ -8636,7 +8636,7 @@ MonoBehaviour:
   - {fileID: 1820390422}
   - {fileID: 995675752}
   relativeSizes: 0100000002000000
-  edgeMargin: 15
+  edgeMargin: 30
   contentMargin: 15
   background: {fileID: 1092838578}
 --- !u!114 &798722570
@@ -9362,7 +9362,7 @@ MonoBehaviour:
   - {fileID: 2143297593}
   - {fileID: 272637037}
   relativeSizes: 0100000003000000
-  edgeMargin: 10
+  edgeMargin: 30
   contentMargin: 10
   background: {fileID: 642882163}
 --- !u!114 &904790617
@@ -12619,7 +12619,7 @@ MonoBehaviour:
   - {fileID: 1312273494}
   - {fileID: 1665493989}
   relativeSizes: 0100000002000000
-  edgeMargin: 15
+  edgeMargin: 30
   contentMargin: 15
   background: {fileID: 613046109}
 --- !u!114 &1228990217
@@ -16142,7 +16142,7 @@ MonoBehaviour:
   - {fileID: 705955082}
   - {fileID: 475806489}
   relativeSizes: 0100000003000000
-  edgeMargin: 10
+  edgeMargin: 30
   contentMargin: 10
   background: {fileID: 716667195}
 --- !u!114 &1557171978
@@ -17112,7 +17112,7 @@ MonoBehaviour:
   - {fileID: 1996825570}
   - {fileID: 482780102}
   relativeSizes: 0100000002000000
-  edgeMargin: 15
+  edgeMargin: 30
   contentMargin: 15
   background: {fileID: 1384239921}
 --- !u!114 &1604105559
@@ -18740,7 +18740,7 @@ MonoBehaviour:
   - {fileID: 944374758}
   - {fileID: 1668568893}
   relativeSizes: 0100000001000000
-  edgeMargin: 10
+  edgeMargin: 30
   contentMargin: 10
   background: {fileID: 1586965023}
 --- !u!114 &1746932030
