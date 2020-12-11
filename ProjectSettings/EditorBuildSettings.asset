@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Public/Bet 2/Scenes/MainMenu2.unity
+    guid: 21d29e338ad91d044afa7bed6093fba0
+  - enabled: 1
     path: Assets/Public/Bet 2/Scenes/Portfolio2.unity
     guid: 079668c7c78012a4eb024b173fae55f5
   - enabled: 0
