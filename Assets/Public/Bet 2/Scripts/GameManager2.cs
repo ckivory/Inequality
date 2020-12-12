@@ -266,6 +266,32 @@ public class GameManager2 : MonoBehaviour
     }
 
 
+    public void StockGrowPopup()
+    {
+        string stockTitle = "Stocks Appreciate\n";
+
+        for (int stockIndex = 0; stockIndex < stockOptions.Count; stockIndex++)
+        {
+            StockController stock = stockOptions[stockIndex];
+            stockTitle += "Stock " + (stockIndex + 1) + ": From $" + stock.price + " To: $";
+            stock.Grow();
+            stockTitle += stock.price;
+
+            if (stockIndex < 2)
+            {
+                stockTitle += "\n";
+            }
+        }
+
+        popup.title.SetText(stockTitle);
+
+        popup.SetButtonNum(1);
+        popup.buttons[0].textBox.SetText("Next Round");
+        popup.buttons[0].SetListener(StartRound);
+        OpenPopup();
+    }
+
+
     public void CommunityEventPopup()
     {
         EventController chosenEvent = communityEvents.events[Random.Range(0, communityEvents.events.Count)];
@@ -307,8 +333,8 @@ public class GameManager2 : MonoBehaviour
         }
 
         popup.SetButtonNum(1);
-        popup.buttons[0].textBox.SetText("Next Round");
-        popup.buttons[0].SetListener(StartRound);
+        popup.buttons[0].textBox.SetText("See Stock Growth");
+        popup.buttons[0].SetListener(StockGrowPopup);
         popup.buttons[0].GetOnClick().AddListener(DisableImage);
         OpenPopup();
     }
@@ -637,10 +663,7 @@ public class GameManager2 : MonoBehaviour
 
     private void EndRound()
     {
-        foreach(StockController stock in stockOptions)
-        {
-            stock.Grow();
-        }
+        
 
         if (roundNum < roundsPerGen)
         {
